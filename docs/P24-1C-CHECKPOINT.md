@@ -2,6 +2,33 @@
 
 **P24.1c PARTIAL — điều tra/báo cáo hoàn tất, chưa DONE về điều kiện nghiệm thu; C-01 PARTIAL local. NO-GO / P24 BLOCKED giữ nguyên.** Đính chính sau điều tra: 8 FAIL mới do fixture chưa thích nghi với thay đổi P24.1b phải được xử lý và kiểm chứng trước nghiệm thu C-01; không đẩy chúng sang nhóm H-05 đã biết. Cụm “DONE phần kiểm tra và báo cáo” đã dùng trước đây không có nghĩa P24.1c đạt nghiệm thu. Đã kiểm tra P24.1a và P24.1b đều DONE trong prompts/readiness và checkpoint b trước lần chạy c; working tree lúc bắt đầu c sạch. Lượt điều tra bổ sung chỉ đọc log/source/Git và cập nhật báo cáo này, không sửa code/test/baseline, không chạy lại test, không scrub DB thật, không commit.
 
+
+## P24.1d — sửa fixture và kiểm chứng giới hạn, 09/09/2026
+
+**DONE trong phạm vi P24.1d: cả 8 records #7–14 đã FIX, assertions mục tiêu đều PASS.** Các phần P24.1c bên dưới giữ số liệu và phân tích lịch sử tại lần c; ghi chú FIX trong bảng là kết quả chạy mới của d. Không suy diễn thành PASS cho lượt 14 file hoặc đóng C-01/P24; P24.1e xác nhận cuối chưa chạy, NO-GO / P24 BLOCKED giữ nguyên.
+
+Đã đọc phân tích #7–14 và đối chiếu flow hiện có: hai fixture DB memory trống thiếu Master khi gọi createApp(). Chỉ sửa test/error-handling-test.js và test/observability-test.js để await migrateCredentials(db, { env }) trước createApp(), qua flow migration/provisioning hiện có (hash, verify và transaction), áp dụng cho từng test case dùng fixture. Không insert principal thủ công, không thay assertions, không sửa auth/config.js hay code production, không khôi phục runtime bootstrap fallback.
+
+Hai lệnh đã chạy, tuần tự theo file:
+
+```text
+node --test --test-concurrency=1 test/observability-test.js test/error-handling-test.js
+node --test --test-concurrency=1 test/auth-test.js test/session-test.js test/request-security-test.js test/auth-scrub-test.js
+```
+
+| File | PASS | FAIL | Kết luận P24.1d |
+|---|---:|---:|---|
+| observability-test.js | 7 | 0 | Đạt baseline P24/P22; #10–14 đã FIX |
+| error-handling-test.js | 4 | 0 | Đạt baseline P24/P22; #7–9 đã FIX |
+| auth-test.js | 7 | 1 | Chỉ lỗi startup exited tại :137 → :157, record #4 H-05 cũ |
+| session-test.js | 18 | 0 | Không regression phụ trong phạm vi chạy |
+| request-security-test.js | 6 | 0 | Không regression phụ trong phạm vi chạy |
+| auth-scrub-test.js | 7 | 0 | Không regression phụ trong phạm vi chạy |
+
+Lệnh mục tiêu: **11 PASS / 0 FAIL**, exit 0. Lệnh liên quan: **38 PASS / 1 FAIL**, exit 1, khớp baseline a/b của bốn file; đã chạy cả bốn tên file được yêu cầu dù mô tả ghi “3 file”. Tổng phạm vi d: **49 PASS / 1 FAIL / 0 skip / 0 cancelled (50 tests)**. Log: [target-tests.txt](../tmp/p24-1d/target-tests.txt), [related-tests.txt](../tmp/p24-1d/related-tests.txt). Không ghi đè log/results của c.
+
+**Sáu records #1–6 (H-05) giữ nguyên, không sửa và không đóng:** chỉ #4 được chạy lại và vẫn FAIL; #1–3/#5–6 không chạy lại trong d. Không chạy full suite 14 file, không chạy smoke/scan bổ sung, không commit.
+
 ## Tổng hợp a/b/c
 
 | Bước | Trạng thái | Bằng chứng và giới hạn |
@@ -68,14 +95,14 @@ Dòng dưới là dòng hiện tại tại lần c: “khai báo → điểm l�
 | 4 | `CLI migration and production HTTP checkpoint work with explicit configuration` — `startup exited` | `test/auth-test.js:137` → `:157`; trước b là `:132` → `:152` | **Có trong 5 lỗi gốc P24**, cũng là **1 FAIL duy nhất a/b**. | **H-05/P15-Q1**. PORT=0, thiếu TRUST_PROXY, chờ chuỗi log cũ; test đã migrate Master trước spawn. B thêm 5 dòng ở test trước đó nên số dòng dịch, không tạo lỗi mới này. |
 | 5 | `before/after pixel equality across four public tabs at 390/768/1440` — `pixels changed: 1440 dashboard` | `test/dashboard-xss-test.js:70` → `:80` | **Có cùng subtest trong 5 lỗi gốc P24** (P24: `390 dashboard`); P22 đã ghi đúng `1440 dashboard`. | **H-05 có lịch sử**. Mock HTTP/static frontend, không chạy backend a/b. Assertion so bytes PNG; chưa chứng minh cùng root cause với biến thể P24. |
 | 6 | `P06 Dashboard XSS and responsive regression` — parent FAIL của #5 | `test/dashboard-xss-test.js:30`; log c dòng 50 | **Parent Dashboard có trong 9 FAIL P24**. | **H-05, lỗi lan truyền**, không phải regression độc lập. |
-| 7 | `404 route, missing gym, API HTML negotiation, IDs and early Host rejection` — thiếu active Master principal | `test/error-handling-test.js:38` → `:39` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; không trong 9 FAIL/5 lỗi gốc P24. Suite error-handling P24/P22 đều 4/0. | **B — regression fixture trực tiếp từ P24.1b**, cần sửa/kiểm chứng trước nghiệm thu C-01. |
-| 8 | `validation, malformed JSON, body limit and unknown status400 do not disclose input` — thiếu active Master principal | `test/error-handling-test.js:48` → `:49` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 4/0. | **B**, cùng nguyên nhân #7, chưa chạy assertions validation/disclosure. |
-| 9 | `real SQLite constraint and query failures plus unexpected async rejection are sanitized` — thiếu active Master principal | `test/error-handling-test.js:58` → `:59` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 4/0. | **B**, cùng nguyên nhân #7, chưa kiểm chứng sanitize SQL/async errors. |
-| 10 | `health/readiness minimal, uncached, Host protected; readiness fails on real DB access failure and draining` — thiếu active Master principal | `test/observability-test.js:47` → `:48` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 observability đều 7/0. | **B**, chưa chạy health/readiness assertions. |
-| 11 | `HTTP logs correlate errors without headers, URLs, query, PII or exception text` — thiếu active Master principal | `test/observability-test.js:65` → `:66` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, thiếu evidence HTTP log/redaction; không được gọi logging đã PASS toàn bộ. |
-| 12 | `SIGTERM drains async database write, client aborted=false, repeated signals safe` — thiếu active Master principal | `test/observability-test.js:75` → `:79` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, một test sinh từ vòng lặp, chưa vào shutdown/drain scenario. |
-| 13 | `SIGTERM drains async database write, client aborted=true, repeated signals safe` — thiếu active Master principal | `test/observability-test.js:75` → `:79` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, record riêng với #12 dù cùng dòng; chưa vào aborted-client scenario. |
-| 14 | `shutdown deadline reports failure without closing DB under a pending operation` — thiếu active Master principal | `test/observability-test.js:93` → `:94` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, chưa kiểm chứng deadline/pending DB operation. |
+| 7 | `404 route, missing gym, API HTML negotiation, IDs and early Host rejection` — thiếu active Master principal | `test/error-handling-test.js:38` → `:39` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; không trong 9 FAIL/5 lỗi gốc P24. Suite error-handling P24/P22 đều 4/0. | **B — regression fixture trực tiếp từ P24.1b**, cần sửa/kiểm chứng trước nghiệm thu C-01. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 8 | `validation, malformed JSON, body limit and unknown status400 do not disclose input` — thiếu active Master principal | `test/error-handling-test.js:48` → `:49` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 4/0. | **B**, cùng nguyên nhân #7, chưa chạy assertions validation/disclosure. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 9 | `real SQLite constraint and query failures plus unexpected async rejection are sanitized` — thiếu active Master principal | `test/error-handling-test.js:58` → `:59` → fixture `:9` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 4/0. | **B**, cùng nguyên nhân #7, chưa kiểm chứng sanitize SQL/async errors. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 10 | `health/readiness minimal, uncached, Host protected; readiness fails on real DB access failure and draining` — thiếu active Master principal | `test/observability-test.js:47` → `:48` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 observability đều 7/0. | **B**, chưa chạy health/readiness assertions. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 11 | `HTTP logs correlate errors without headers, URLs, query, PII or exception text` — thiếu active Master principal | `test/observability-test.js:65` → `:66` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, thiếu evidence HTTP log/redaction; không được gọi logging đã PASS toàn bộ. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 12 | `SIGTERM drains async database write, client aborted=false, repeated signals safe` — thiếu active Master principal | `test/observability-test.js:75` → `:79` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, một test sinh từ vòng lặp, chưa vào shutdown/drain scenario. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 13 | `SIGTERM drains async database write, client aborted=true, repeated signals safe` — thiếu active Master principal | `test/observability-test.js:75` → `:79` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, record riêng với #12 dù cùng dòng; chưa vào aborted-client scenario. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
+| 14 | `shutdown deadline reports failure without closing DB under a pending operation` — thiếu active Master principal | `test/observability-test.js:93` → `:94` → fixture `:12` → `auth/config.js:16` | **MỚI sau b**; P24/P22 suite 7/0. | **B**, chưa kiểm chứng deadline/pending DB operation. **P24.1d: FIX — PASS** (xem kết quả mới phía trên). |
 
 ### Nguyên nhân tám regression B và mức chắc chắn
 

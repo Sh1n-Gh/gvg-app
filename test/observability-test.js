@@ -6,9 +6,11 @@ const { createLogger, redact } = require('../security/observability');
 const { installShutdown } = require('../security/lifecycle');
 const { createApp } = require('../server');
 const { createDb } = require('../db');
+const { migrateCredentials } = require('../auth/migrate');
 const env = { MASTER_ADMIN_BOOTSTRAP_PASSWORD: 'test-bootstrap-password', NODE_ENV: 'production', PUBLIC_ORIGIN: 'https://gvg.example.invalid', TRUST_PROXY: '127.0.0.1', SESSION_SECRETS: 's'.repeat(32), AUTH_RATE_LIMIT_SECRET: 'r'.repeat(32) };
 async function fixture(serve = (req, res) => res.end()) {
   const lines = [], db = createDb(':memory:');
+  await migrateCredentials(db, { env });
   const app = createApp(db, { env, logger: createLogger(env, line => lines.push(JSON.parse(line))), mapImages: { serve } });
   const server = app.listen(0, '127.0.0.1');
   await new Promise(r => server.once('listening', r));

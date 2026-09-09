@@ -2,11 +2,14 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const { createDb } = require('../db');
 const { createApp } = require('../server');
+const { migrateCredentials } = require('../auth/migrate');
 const { PublicError } = require('../security/errors');
 const envFor = mode => ({ NODE_ENV: mode, TRUST_PROXY: '127.0.0.1', PUBLIC_ORIGIN: 'https://gvg.example.invalid', SESSION_SECRETS: 's'.repeat(32), AUTH_RATE_LIMIT_SECRET: 'r'.repeat(32), MASTER_ADMIN_BOOTSTRAP_PASSWORD: 'test-bootstrap-password' });
 async function fixture(mode = 'production') {
   const db = createDb(':memory:');
-  const app = createApp(db, { env: envFor(mode), mapImages: { serve: async req => {
+  const env = envFor(mode);
+  await migrateCredentials(db, { env });
+  const app = createApp(db, { env, mapImages: { serve: async req => {
     if (req.path === '/constraint') db.prepare("INSERT INTO gyms(name,slug,admin_code) VALUES ('x','duplicate','test')").run();
     else if (req.path === '/validation') throw new PublicError('Dữ liệu không hợp lệ: name');
     else throw Object.assign(new Error('SQL secret-canary /private/database.sqlite C:\private\secret'), req.path === '/status400' ? { status: 400 } : {});
