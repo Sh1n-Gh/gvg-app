@@ -67,6 +67,12 @@ Mục tiêu: xử lý lần lượt các vấn đề bảo mật, lỗi, vận h
 - Test `node test/master-routes-smoke-test.js`: **50 PASS / 0 FAIL**. Không chạy full suite. Log local: `tmp/p24-1a/auth-results.txt`, `tmp/p24-1a/master-results.txt`.
 - **P24.1b: DONE script/test/rehearsal clone — 09/09/2026; live scrub vẫn OPEN.** Không migration/scrub DB thật, không commit. C-01 còn PARTIAL; kết luận NO-GO giữ nguyên. Xem mục P24.1b bên dưới.
 
+## P24.1c — Xác minh và tổng kết C-01 local
+
+**DONE kiểm tra/báo cáo — 09/09/2026; C-01 PARTIAL local, chưa đóng.** Đã kiểm tra a/b DONE trước khi thực hiện. Bộ liên quan 86 PASS / 14 FAIL / 0 skip; Master smoke 50 PASS. Bảy scrub tests PASS; scan clone sạch cột/bytes, nguồn clone không đổi; source vẫn có plaintext fixture, log scan 0 match trong tập giá trị đã biết nhưng chưa bao phủ mọi password sinh động. Không đủ evidence PASS local.
+
+NO-GO / P24 BLOCKED giữ nguyên; H-01/H-04/H-05/H-06 mở. Không full regression, không apply DB thật, không commit. [Báo cáo tổng hợp a/b/c và điều kiện phê duyệt live scrub](P24-1C-CHECKPOINT.md), [scan/digest](P24-1C-RESULTS.json). Dừng chờ người dùng xem xét trước quyết định bước tiếp theo. Các ghi chú “không P24.1c” ở mục b là giới hạn lịch sử của lượt b.
+
 ## P15-C1c — Thiết kế scrub idempotent (tham chiếu)
 
 Task này trước đây chỉ được liệt kê trong bảng P15 tại [PRODUCTION-READINESS](PRODUCTION-READINESS.md). Thiết kế có sẵn là [AUTH-DESIGN](AUTH-DESIGN.md), Phase C và rollback: backup/restore; xác minh principal/hash; tombstone unique thay plaintext; count/hash/login/reset/revoke; chạy lại không đổi; quét không plaintext; gỡ bootstrap runtime. Chỉ viết và rehearsal trên bản sao. Live apply là rollout riêng cần phê duyệt. Implementation tương ứng hiện là P24.1b bên dưới.

@@ -2,8 +2,8 @@
 
 Ngày baseline: 04/09/2026  
 Múi giờ: Asia/Bangkok  
-Phạm vi hiện tại: P24 — tổng duyệt cuối trên fixture local, ngày 09/09/2026.  
-Kết luận hiện tại: **NO-GO / P24 BLOCKED**. Full regression **240 PASS / 9 FAIL / 0 skip** (5 lỗi gốc + 4 parent). Rehearsal local 58 checks PASS; restore smoke 52 PASS; audit dependency 0 advisory. C-01 còn plaintext, H-05/P22 chưa xanh, privacy và các gate hạ tầng/release/backup vận hành còn mở. Xem [P24 checkpoint](P24-CHECKPOINT.md), [kết quả và digest bằng chứng](P24-RESULTS.json) và mục P24 cuối tài liệu. Không deploy production/domain thật; chờ lệnh rõ ràng của người dùng. Các phần P00–P23 bên dưới là lịch sử, kể cả mô tả code/trạng thái đã thay đổi; không thay thế kết luận P24.
+Phạm vi hiện tại: P24.1c — xác minh C-01 trên local/fixture, ngày 09/09/2026.
+Kết luận hiện tại: **NO-GO / P24 BLOCKED**. P24.1c xác nhận P24.1a/b DONE; dừng ghi plaintext mới và scrub clone đã có bằng chứng, nhưng **C-01 PARTIAL — chưa đủ evidence đóng local**: test liên quan còn FAIL, source còn plaintext mẫu fixture và scan log có giới hạn. Không ghi “C-01 đã đóng local” khi chưa đạt tiêu chí. **H-01, H-04, H-05, H-06 vẫn mở**, không kết luận GO. P24.1c không chạy full regression; kết quả regression gần nhất vẫn là lịch sử P22 (243 PASS / 8 FAIL / 0 skip), không phải kết quả lần này. Xem [P24.1c checkpoint](P24-1C-CHECKPOINT.md) và [scan/digest](P24-1C-RESULTS.json). Live scrub chưa được áp dụng hoặc phê duyệt. Các phần P00–P24.1b bên dưới giữ bằng chứng lịch sử; trạng thái C-01 hiện tại theo P24.1c và bảng Critical.
 
 ## 1. Phạm vi và trạng thái repository
 
@@ -163,12 +163,12 @@ Quy ước trạng thái: `PASS` đã có bằng chứng hiện tại; `PARTIAL`
 
 | ID | Kiểm soát | Hiện tại | Bằng chứng | Tiêu chí go-live |
 |---|---|---|---|---|
-| C-01 | Authentication an toàn cho Master/Gym | **PARTIAL; live scrub OPEN** | **Dừng ghi plaintext mới: DONE (P24.1a). Scrub sẵn sàng: script + 7 test PASS + rehearsal clone PASS (P24.1b)** — 3 → 0 plaintext, HTTP login 3/3, idempotence/rollback PASS; hash/tombstone/revoke atomic, handoff mã hóa để bàn giao thủ công. | **Chưa apply DB thật**, cần phê duyệt live rollout riêng; C-01 vẫn OPEN cho tới khi apply và xác minh. Xem [P24.1b](P24-1B-CHECKPOINT.md). |
+| C-01 | Authentication an toàn cho Master/Gym | **PARTIAL local (P24.1c); live scrub OPEN** | P24.1a/b DONE; scan lại clone: integrity OK, 0 non-tombstone, 0 match password cũ/mới ở mọi cột và bytes DB; digest không đổi. Test liên quan còn FAIL; source có plaintext fixture; log scan chỉ chứng minh tập giá trị đã biết. | Chưa đủ evidence PASS local; không đòi full regression để đóng C-01 (thuộc H-05). Không apply DB thật. Xem [kết quả/điều kiện còn thiếu](P24-1C-CHECKPOINT.md). |
 | C-02 | Authorization và tenant isolation | **PASS local (P15)** | Role/tenant/session negative tests và browser cross-gym PASS; `auth/backend.js:92`. | Duy trì regression, xác minh staging sau khi được phép. |
 | C-03 | XSS/output encoding và URL safety | **PASS security; P22 DONE (09/09)** | P22 riêng và trong regression đều 12 PASS/0 FAIL/0 skip; stored-XSS đi hết Gym/Dashboard/Master, không còn timeout hoặc parent P22 fail. | H-05 còn FAIL; không coi visual/workflow failure là XSS thực thi. Xem [P22 checkpoint](P22-CHECKPOINT.md). |
 | C-04 | CSRF và brute-force/rate limiting | **PASS local có giới hạn (P15)** | Origin/token, SQLite credential limiter và HTTP quota tests PASS; `auth/backend.js:89`, `security/request-limits.js:25`. | Một process, xác minh proxy/NAT/load thật sau. |
 | C-05 | SQL injection | **PASS source + local tests (P15)** | Placeholder/binding routes/auth/engine; validation tests PASS; `security/validation.js:10`. | Duy trì prepared statements; không coi là pentest độc lập. |
-| C-06 | Secret/Git hygiene | **PASS scan P15 (P15)** | 96 working files + 157 blobs/10 refs; 62 match đều test fixture; không phát hiện secret thật trong phạm vi mẫu quét. | Không bao gồm DB/secret store; C-01 vẫn FAIL. |
+| C-06 | Secret/Git hygiene | **PASS scan P15 (P15)** | 96 working files + 157 blobs/10 refs; 62 match đều test fixture; không phát hiện secret thật trong phạm vi mẫu quét. | Không bao gồm DB/secret store; C-01 hiện PARTIAL local theo P24.1c. |
 
 ### High
 
@@ -503,7 +503,7 @@ exit 0 với 0 advisory; chưa clean install/build Linux.
 
 | Severity | Vấn đề còn mở tại P24 | Điều kiện còn lại |
 |---|---|---|
-| Critical | C-01: dừng ghi plaintext mới DONE tại P24.1a; P24.1b script/test/rehearsal clone DONE, live scrub vẫn OPEN | Chờ người dùng phê duyệt rollout riêng sau [báo cáo P24.1b](P24-1B-CHECKPOINT.md); chưa apply DB thật |
+| Critical | C-01: P24.1a/b DONE; P24.1c xác minh xong, PARTIAL local; live scrub OPEN | Xem [P24.1c](P24-1C-CHECKPOINT.md): test và giới hạn scan chưa cho phép đóng local; chưa apply DB thật |
 | High | H-05/P22: 5 regression failures; visual baseline ignored, runner không fail khi suite skip | Sửa nguyên nhân, baseline tái lập, clean full suite 0 fail/skip; hoàn tất E2E stored-XSS |
 | High | H-01: HTTPS redirect/TLS chỉ review template; chưa staging gate/proxy/firewall/permissions thật | Gate mọi trang/API/upload; nginx -t, TLS chain/SNI/renewal, IP/proxy spoof, kiểm port IPv4/IPv6 từ ngoài, ACL/mode service/DB/backup |
 | High | H-04: backup/restore local xanh, vận hành chưa chứng minh | Snapshot DB+uploads+season đồng bộ, off-server mã hóa/khóa khôi phục/scheduler/retention/alert, restore đại diện và RPO/RTO end-to-end |
@@ -554,3 +554,11 @@ Rủi ro tại thời điểm P24.1a: plaintext cũ vẫn tồn tại, P24.1b ch
 - **Không apply DB thật.** Rollout riêng cần phê duyệt tường minh, backup/restore, maintenance window, private handoff/key, bàn giao và xử lý WAL/backup cũ. Chỉ đóng C-01 sau apply thật + xác minh. Không commit, không P24.1c.
 
 File, bằng chứng, giới hạn scan và quy trình bàn giao/rollback: [P24.1b checkpoint](P24-1B-CHECKPOINT.md), [rehearsal results](P24-1B-RESULTS.json).
+
+## P24.1c — Xác minh local hoàn tất, C-01 PARTIAL (09/09/2026)
+
+P24.1a/b đã DONE trước khi bắt đầu. Bộ test liên quan: **86 PASS / 14 FAIL / 0 skip**, Master smoke **50 PASS / 0 FAIL**; bảy scrub tests và hai test P24.1a PASS. Tám lỗi fixture production thiếu Master principal làm thiếu evidence error-handling/observability; một lỗi auth startup còn mở. Lỗi visual/workflow kèm parent thuộc H-05, không phải tiêu chí full regression cho C-01.
+
+Scan lại clone P24.1b: integrity OK, **0 non-tombstone / 0 match mọi cột / 0 match bytes**, digest không đổi. Source có plaintext mẫu fixture; stdout/stderr hoàn tất không match tập credential đã biết, nhưng không bao phủ mọi password sinh động/logger nội bộ. Do đó **chưa đủ evidence đóng C-01 local**, không nâng PASS. Không apply DB thật; H-01/H-04/H-05/H-06 vẫn mở, **NO-GO không đổi**.
+
+[Báo cáo P24.1c](P24-1C-CHECKPOINT.md) tổng hợp a/b/c, số lỗi, phạm vi scan và điều kiện live rollout: chủ sở hữu duyệt riêng, người vận hành/kiểm chứng được chỉ định, backup + restore drill, maintenance window, private handoff và thông báo gym admin, kiểm tra sau chạy trước resume. [Results/digest](P24-1C-RESULTS.json). Dừng chờ người dùng xem xét, không tự chuyển H-05 hoặc scrub thật.
