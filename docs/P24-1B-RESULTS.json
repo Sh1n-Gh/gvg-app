@@ -1,0 +1,48 @@
+{
+  "source": "test/test.db",
+  "originalSha256": "bbcc6590a64b25e6fcca0820aedd63c8c9916ee30d81f89cb88339823b9ede63",
+  "originalWalSha256": "ba2485535c4c801622112b66f5e593561b868efd166094bc8913764fdfd414fb",
+  "originalUnchanged": true,
+  "preparationOnCopyOnly": {
+    "migrated": 4,
+    "skipped": 0,
+    "failed": 0
+  },
+  "rehearsal": {
+    "before": 3,
+    "scrubbed": 3,
+    "after": 0,
+    "changed": true,
+    "secondRun": {
+      "before": 0,
+      "scrubbed": 0,
+      "after": 0,
+      "changed": false
+    },
+    "sourceUnchanged": true,
+    "sourceSha256": "e989bf504ed48be0d97725be74c0ab64ee743b77170947d229a0475536ef9387"
+  },
+  "allColumnPlaintextMatches": 0,
+  "activeGymHttpLoginPass": 3,
+  "deletedGymsRemainInaccessible": 0,
+  "rollbackAfterFirstGym": "PASS",
+  "notes": "Source copied as bytes only. Existing source has legacy schema; additive schema/auth preparation occurred exclusively on prepared-copy.db.",
+  "tests": {
+    "scrub": {
+      "pass": 7,
+      "fail": 0
+    },
+    "authSessionRequestSecurityIncludingScrub": {
+      "skip": 0,
+      "pass": 38,
+      "knownFailure": "P15-Q1 startup fixture",
+      "fail": 1
+    },
+    "deployment": {
+      "skip": 0,
+      "pass": 3,
+      "fail": 0
+    }
+  },
+  "scope": "Clone rehearsal only. Live apply OPEN; P24.1c not performed."
+}

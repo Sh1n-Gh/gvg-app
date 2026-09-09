@@ -65,7 +65,21 @@ Mục tiêu: xử lý lần lượt các vấn đề bảo mật, lỗi, vận h
 - Giữ key response `gym.admin_code` để tương thích UI: đây là temporary password chỉ trả ở response tạo thành công với `Cache-Control: no-store`, không phải giá trị cột DB. Không lưu/log plaintext. Hash async trước transaction; gym/principal/season/round writes nằm trong cùng transaction đồng bộ.
 - Test `node --test test/auth-test.js test/session-test.js test/request-security-test.js`: **31 PASS / 1 FAIL / 0 skip**. Hai test P24.1a PASS (create/login/reset/no plaintext/no disclosure và rollback principal/season/round). FAIL duy nhất là fixture startup P15-Q1 đã biết tại `test/auth-test.js:132`, ngoài phạm vi.
 - Test `node test/master-routes-smoke-test.js`: **50 PASS / 0 FAIL**. Không chạy full suite. Log local: `tmp/p24-1a/auth-results.txt`, `tmp/p24-1a/master-results.txt`.
-- **P24.1b scrub dữ liệu cũ: OPEN, chưa làm.** Không migration/scrub DB thật, không commit. C-01 còn PARTIAL; kết luận NO-GO giữ nguyên.
+- **P24.1b: DONE script/test/rehearsal clone — 09/09/2026; live scrub vẫn OPEN.** Không migration/scrub DB thật, không commit. C-01 còn PARTIAL; kết luận NO-GO giữ nguyên. Xem mục P24.1b bên dưới.
+
+## P15-C1c — Thiết kế scrub idempotent (tham chiếu)
+
+Task này trước đây chỉ được liệt kê trong bảng P15 tại [PRODUCTION-READINESS](PRODUCTION-READINESS.md). Thiết kế có sẵn là [AUTH-DESIGN](AUTH-DESIGN.md), Phase C và rollback: backup/restore; xác minh principal/hash; tombstone unique thay plaintext; count/hash/login/reset/revoke; chạy lại không đổi; quét không plaintext; gỡ bootstrap runtime. Chỉ viết và rehearsal trên bản sao. Live apply là rollout riêng cần phê duyệt. Implementation tương ứng hiện là P24.1b bên dưới.
+
+## P24.1b — Scrub admin_code plaintext cũ
+
+**DONE trong phạm vi script + test + rehearsal clone — 09/09/2026. Live rollout OPEN, C-01 chưa đóng.** Đã kiểm tra P24.1a DONE trước khi bắt đầu.
+
+- `auth/scrub.js`: password tạm random + Argon2id; hash/tombstone/revoke/version trong một transaction; scan mọi cột; rollback toàn bộ khi lỗi; chạy lại no-op. Handoff AES-256-GCM flush trước commit, không stdout password; bàn giao thủ công, không gửi email.
+- `scripts/rehearse-auth-scrub.js`: CLI chỉ tạo clone mới; không có live apply/default DB path, không mở nguồn bằng SQLite, từ chối nguồn WAL chưa checkpoint.
+- Bộ test liên quan **38 PASS / 1 FAIL / 0 skip**, gồm **7/7 test scrub PASS**. FAIL duy nhất P15-Q1 startup fixture đã biết. Clone của DB có sẵn `test/test.db`: **3 → 0 plaintext; HTTP login 3/3 PASS; lần 2 không đổi; rollback PASS; SHA-256 DB và WAL nguồn không đổi**.
+- Bỏ runtime bootstrap fallback trong auth config; giữ additive migration offline và chặn hash tombstone. Xem [báo cáo P24.1b](P24-1B-CHECKPOINT.md) và [kết quả rehearsal](P24-1B-RESULTS.json) cho file, test, atomicity, bàn giao/recovery và rollout còn mở.
+- **Không apply DB thật, không P24.1c, không commit.** Dừng sau báo cáo; người dùng phải duyệt tường minh một bước live rollout riêng.
 
 ---
 

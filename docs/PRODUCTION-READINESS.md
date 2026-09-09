@@ -163,7 +163,7 @@ Quy ước trạng thái: `PASS` đã có bằng chứng hiện tại; `PARTIAL`
 
 | ID | Kiểm soát | Hiện tại | Bằng chứng | Tiêu chí go-live |
 |---|---|---|---|---|
-| C-01 | Authentication an toàn cho Master/Gym | **PARTIAL (P24.1a); scrub OPEN** | **Dừng ghi plaintext mới: DONE** — create gym lưu Argon2id vào `auth_principals.password_hash`, `gyms.admin_code` chỉ chứa tombstone random độc lập; toàn bộ writes và khởi tạo round atomic. **Scrub dữ liệu cũ: OPEN**, chưa thao tác DB cũ. | P24.1a DONE; P24.1b xử lý scrub riêng. Xem bằng chứng P24.1a cuối tài liệu; C-01 chưa đóng toàn bộ. |
+| C-01 | Authentication an toàn cho Master/Gym | **PARTIAL; live scrub OPEN** | **Dừng ghi plaintext mới: DONE (P24.1a). Scrub sẵn sàng: script + 7 test PASS + rehearsal clone PASS (P24.1b)** — 3 → 0 plaintext, HTTP login 3/3, idempotence/rollback PASS; hash/tombstone/revoke atomic, handoff mã hóa để bàn giao thủ công. | **Chưa apply DB thật**, cần phê duyệt live rollout riêng; C-01 vẫn OPEN cho tới khi apply và xác minh. Xem [P24.1b](P24-1B-CHECKPOINT.md). |
 | C-02 | Authorization và tenant isolation | **PASS local (P15)** | Role/tenant/session negative tests và browser cross-gym PASS; `auth/backend.js:92`. | Duy trì regression, xác minh staging sau khi được phép. |
 | C-03 | XSS/output encoding và URL safety | **PASS security; P22 DONE (09/09)** | P22 riêng và trong regression đều 12 PASS/0 FAIL/0 skip; stored-XSS đi hết Gym/Dashboard/Master, không còn timeout hoặc parent P22 fail. | H-05 còn FAIL; không coi visual/workflow failure là XSS thực thi. Xem [P22 checkpoint](P22-CHECKPOINT.md). |
 | C-04 | CSRF và brute-force/rate limiting | **PASS local có giới hạn (P15)** | Origin/token, SQLite credential limiter và HTTP quota tests PASS; `auth/backend.js:89`, `security/request-limits.js:25`. | Một process, xác minh proxy/NAT/load thật sau. |
@@ -503,7 +503,7 @@ exit 0 với 0 advisory; chưa clean install/build Linux.
 
 | Severity | Vấn đề còn mở tại P24 | Điều kiện còn lại |
 |---|---|---|
-| Critical | C-01: dừng ghi plaintext mới DONE tại P24.1a; phase C scrub dữ liệu cũ vẫn OPEN | P24.1b riêng: scrub/revoke/reset/login/idempotence trên clone, kế hoạch rollout riêng được duyệt |
+| Critical | C-01: dừng ghi plaintext mới DONE tại P24.1a; P24.1b script/test/rehearsal clone DONE, live scrub vẫn OPEN | Chờ người dùng phê duyệt rollout riêng sau [báo cáo P24.1b](P24-1B-CHECKPOINT.md); chưa apply DB thật |
 | High | H-05/P22: 5 regression failures; visual baseline ignored, runner không fail khi suite skip | Sửa nguyên nhân, baseline tái lập, clean full suite 0 fail/skip; hoàn tất E2E stored-XSS |
 | High | H-01: HTTPS redirect/TLS chỉ review template; chưa staging gate/proxy/firewall/permissions thật | Gate mọi trang/API/upload; nginx -t, TLS chain/SNI/renewal, IP/proxy spoof, kiểm port IPv4/IPv6 từ ngoài, ACL/mode service/DB/backup |
 | High | H-04: backup/restore local xanh, vận hành chưa chứng minh | Snapshot DB+uploads+season đồng bộ, off-server mã hóa/khóa khôi phục/scheduler/retention/alert, restore đại diện và RPO/RTO end-to-end |
@@ -540,4 +540,17 @@ người dùng trước mọi thao tác production/domain thật.**
 - `node --test test/auth-test.js test/session-test.js test/request-security-test.js`: **31 PASS / 1 FAIL / 0 skip**; FAIL duy nhất `test/auth-test.js:132` là P15-Q1 đã biết (PORT=0, thiếu TRUST_PROXY, chờ log cũ), không sửa ngoài phạm vi. Hai test P24.1a PASS.
 - `node test/master-routes-smoke-test.js`: **50 PASS / 0 FAIL**. Log local ở `tmp/p24-1a/auth-results.txt` và `tmp/p24-1a/master-results.txt`. Không chạy full suite, không thao tác dữ liệu thật, không commit.
 
-Rủi ro còn lại: plaintext cũ vẫn tồn tại, P24.1b chưa thực hiện; regression P15-Q1 và các gate P24 khác vẫn mở. Không coi P24.1a là bằng chứng hoàn tất phase C hoặc phê duyệt go-live.
+Rủi ro tại thời điểm P24.1a: plaintext cũ vẫn tồn tại, P24.1b chưa thực hiện; regression P15-Q1 và các gate P24 khác vẫn mở. Cập nhật P24.1b bên dưới; không coi P24.1a là bằng chứng hoàn tất phase C hoặc phê duyệt go-live.
+
+## P24.1b — Scrub sẵn sàng trên clone; live rollout OPEN (09/09/2026)
+
+**DONE trong phạm vi được giao, C-01 vẫn OPEN / NO-GO.** Đã xác nhận P24.1a DONE trước khi bắt đầu. Script offline sinh password tạm mới, Argon2id, tombstone và revoke/version trong một transaction; scan tất cả cột, rollback khi lỗi, retry no-op. Handoff mã hóa flush trước commit phục vụ bàn giao thủ công và recovery; không gửi email.
+
+- **7/7 test scrub PASS** (HTTP login/change/reset/revoke, deleted/P24.1a gym, quét cột/bytes clone, idempotence, transaction rollback, ngắt tiến trình trước/sau commit, restore, preflight, CLI).
+- Bộ auth/session/request-security liên quan: **38 PASS / 1 FAIL / 0 skip**; FAIL duy nhất P15-Q1 startup fixture đã biết, không làm P24.1c/full regression.
+- Deployment checks bổ sung: **3 PASS / 0 FAIL / 0 skip**; `git diff --check` PASS.
+- Rehearsal bản sao DB có sẵn `test/test.db`: **3 gym plaintext → 0; login 3/3 PASS; lần 2 không đổi; rollback PASS**. Copy DB + WAL và chuẩn bị additive auth chỉ trên clone; SHA-256 DB/WAL gốc không đổi.
+- Bỏ bootstrap fallback của runtime config; production phải có Master principal active. Offline additive migration được giữ để chuẩn bị DB legacy, có guard không hash tombstone.
+- **Không apply DB thật.** Rollout riêng cần phê duyệt tường minh, backup/restore, maintenance window, private handoff/key, bàn giao và xử lý WAL/backup cũ. Chỉ đóng C-01 sau apply thật + xác minh. Không commit, không P24.1c.
+
+File, bằng chứng, giới hạn scan và quy trình bàn giao/rollback: [P24.1b checkpoint](P24-1B-CHECKPOINT.md), [rehearsal results](P24-1B-RESULTS.json).

@@ -103,9 +103,14 @@ test('production configuration is fail-fast and errors contain only setting name
       const bad = {...config}; delete bad[key];
       assert.throws(() => validateConfig(db,bad),err => err.message.startsWith('AUTH_CONFIG:') && !err.message.includes(env.MASTER_ADMIN_CODE));
     }
-    validateConfig(db,config);
+    assert.throws(() => validateConfig(db,config), /active Master principal/);
     await migrateCredentials(db,{env});
     validateConfig(db,config);
+    const runtimeOnly={...config};delete runtimeOnly.MASTER_ADMIN_CODE;
+    validateConfig(db,runtimeOnly);
+    for(const key of ['SESSION_SECRETS','AUTH_RATE_LIMIT_SECRET']) {
+      const bad={...runtimeOnly};delete bad[key];assert.throws(()=>validateConfig(db,bad),/AUTH_CONFIG/);
+    }
     assert.throws(() => validateConfig(db,{...config,AUTH_RATE_LIMIT_SECRET:config.SESSION_SECRETS}));
   } finally { db.close(); }
 });

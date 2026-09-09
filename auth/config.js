@@ -12,8 +12,8 @@ function validateConfig(db, env = process.env) {
   }
   const exists = db.prepare("SELECT 1 FROM sqlite_master WHERE name='auth_principals'").get();
   const master = exists && db.prepare("SELECT id FROM auth_principals WHERE role='master' AND disabled_at IS NULL").get();
-  if (!master && !env.MASTER_ADMIN_BOOTSTRAP_PASSWORD && !env.MASTER_ADMIN_CODE) {
-    throw new Error('AUTH_CONFIG: Master principal or bootstrap input is required');
+  if (!master) {
+    throw new Error('AUTH_CONFIG: active Master principal is required; provision offline');
   }
   try {
     const url = new URL(env.PUBLIC_ORIGIN);

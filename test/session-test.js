@@ -326,6 +326,7 @@ test('development accepts empty example secrets; production requires configured 
   try{assert.equal((await f.login()).status,200);}finally{await f.close();}
   const {validateConfig}=require('../auth/config');const db=createDb(':memory:');
   try{
+    await migrateCredentials(db,{env:{MASTER_ADMIN_CODE:masterPassword}});
     for(const value of ['', 'http://example.test','https://example.test/']) {
       assert.throws(()=>validateConfig(db,{NODE_ENV:'production',SESSION_SECRETS:'s'.repeat(32),AUTH_RATE_LIMIT_SECRET:'r'.repeat(32),
         MASTER_ADMIN_CODE:'bootstrap-fixture',PUBLIC_ORIGIN:value}),/PUBLIC_ORIGIN/);

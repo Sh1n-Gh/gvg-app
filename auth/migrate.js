@@ -38,6 +38,8 @@ async function migrateCredentials(db, { env = process.env, backupPath, hash = pa
   try {
     for (const gym of gyms) {
       if (existing.some(p => p.role === 'gym' && p.gym_id === gym.id)) continue;
+      // Never turn a post-cutover tombstone into a usable credential.
+      if (/^disabled:[a-f0-9]{64}$/.test(gym.admin_code)) throw new Error();
       const passwordHash = await hash(gym.admin_code, { legacy: true });
       if (!await passwords.verifyPassword(gym.admin_code, passwordHash)) throw new Error();
       pending.push({ role: 'gym', gymId: gym.id, passwordHash });
