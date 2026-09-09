@@ -1,0 +1,273 @@
+{
+  "date": "2026-09-09",
+  "decision": "NO-GO",
+  "fullRegression": {
+    "exitCode": 1,
+    "rows": [
+      {
+        "suite": "admin-xss-test.js",
+        "pass": 6,
+        "fail": 2,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "auth-test.js",
+        "pass": 7,
+        "fail": 1,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "backup-restore-test.js",
+        "pass": 5,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "dashboard-xss-test.js",
+        "pass": 3,
+        "fail": 2,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "deployment-test.js",
+        "pass": 3,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "engine-test.js",
+        "pass": 32,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "error-handling-test.js",
+        "pass": 4,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "frontend-session-test.js",
+        "pass": 5,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "frontend-ux-test.js",
+        "pass": 41,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "map-images-test.js",
+        "pass": 5,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "master-routes-smoke-test.js",
+        "pass": 50,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "master-xss-test.js",
+        "pass": 7,
+        "fail": 2,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "migrations-test.js",
+        "pass": 12,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "observability-test.js",
+        "pass": 7,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "release-test.js",
+        "pass": 13,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "request-security-test.js",
+        "pass": 6,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "security-e2e-test.js",
+        "pass": 10,
+        "fail": 2,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "security-headers-test.js",
+        "pass": 3,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "session-test.js",
+        "pass": 16,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      },
+      {
+        "suite": "sqlite-concurrency-test.js",
+        "pass": 5,
+        "fail": 0,
+        "skip": 0,
+        "cancelled": 0
+      }
+    ],
+    "totals": {
+      "pass": 240,
+      "fail": 9,
+      "skip": 0,
+      "cancelled": 0
+    }
+  },
+  "rehearsal": {
+    "scope": "local Windows fixture; production-mode app, simulated artifact/maintenance/file backup/code switch; no TLS or provider",
+    "node": "v24.19.0",
+    "deployMs": 1096,
+    "rollbackMs": 859,
+    "restoreMs": 812,
+    "checks": [
+      "STATIC ONLY fixed HTTPS redirect",
+      "STATIC ONLY TLS versions and unknown SNI rejection",
+      "STATIC ONLY proxy replaces forwarding headers",
+      "production listener configured loopback even with wildcard HOST",
+      "STATIC ONLY service user and permission restrictions",
+      "source digest simulation",
+      "production migration CLI exit 0",
+      "migration 004 applied with backup receipt",
+      "release readiness candidate-simulation",
+      "candidate-simulation/health",
+      "candidate-simulation/ready",
+      "candidate-simulation login",
+      "candidate-simulation secure cookie",
+      "candidate-simulation CSP/HSTS/headers",
+      "candidate-simulation unauthenticated guard",
+      "candidate-simulation host rejection",
+      "candidate-simulation private /.env",
+      "candidate-simulation private /.git/config",
+      "candidate-simulation private /server.js",
+      "candidate-simulation private /package.json",
+      "candidate-simulation private /db/gvg.db",
+      "candidate-simulation private /backups/backup.db",
+      "candidate-simulation no cookie on HTTP",
+      "source digest simulation",
+      "release readiness previous-same-schema-simulation",
+      "previous-same-schema-simulation/health",
+      "previous-same-schema-simulation/ready",
+      "previous-same-schema-simulation login",
+      "previous-same-schema-simulation secure cookie",
+      "previous-same-schema-simulation CSP/HSTS/headers",
+      "previous-same-schema-simulation unauthenticated guard",
+      "previous-same-schema-simulation host rejection",
+      "previous-same-schema-simulation private /.env",
+      "previous-same-schema-simulation private /.git/config",
+      "previous-same-schema-simulation private /server.js",
+      "previous-same-schema-simulation private /package.json",
+      "previous-same-schema-simulation private /db/gvg.db",
+      "previous-same-schema-simulation private /backups/backup.db",
+      "previous-same-schema-simulation no cookie on HTTP",
+      "rollback did not run down migration",
+      "restore principal count",
+      "original database retained",
+      "release readiness separate-restore",
+      "separate-restore/health",
+      "separate-restore/ready",
+      "separate-restore login",
+      "separate-restore secure cookie",
+      "separate-restore CSP/HSTS/headers",
+      "separate-restore unauthenticated guard",
+      "separate-restore host rejection",
+      "separate-restore private /.env",
+      "separate-restore private /.git/config",
+      "separate-restore private /server.js",
+      "separate-restore private /package.json",
+      "separate-restore private /db/gvg.db",
+      "separate-restore private /backups/backup.db",
+      "separate-restore no cookie on HTTP",
+      "injected secrets absent from child logs"
+    ],
+    "events": [
+      "maintenance:true",
+      "stop",
+      "backup",
+      "record:backed-up",
+      "migrate",
+      "schema",
+      "activate:candidate-simulation",
+      "start",
+      "ready",
+      "record:ready",
+      "maintenance:false",
+      "maintenance:true",
+      "stop",
+      "backup",
+      "record:backed-up",
+      "schema",
+      "activate:previous-same-schema-simulation",
+      "start",
+      "ready",
+      "record:ready",
+      "maintenance:false"
+    ],
+    "sourceDigest": "40a4412306dce7dd65a66aa5a47d5f683d0995a0f193c923e3f7cabf425f6a58",
+    "backupDigest": "640b283dc4365a5883dd92d41219ad9a1c0912672c2507cfd12cddd153c20ed9",
+    "limitations": [
+      "same source used for both release labels, no historical artifact",
+      "no actual reverse proxy/TLS/firewall/Linux permissions/secret manager",
+      "runtime file backup and off-server encryption simulated",
+      "Windows process termination does not certify systemd graceful drain",
+      "restore time excludes off-server download/decryption; synthetic master only"
+    ]
+  },
+  "restoreSmoke": {
+    "pass": 52,
+    "fail": 0
+  },
+  "npmAudit": {
+    "info": 0,
+    "low": 0,
+    "moderate": 0,
+    "high": 0,
+    "critical": 0,
+    "total": 0
+  },
+  "evidenceSha256": {
+    "full-regression.log": "41c27244da5fb97d7efe3cda0cf27aa081d4b10750f36d76ed5f754e0e2b2fb9",
+    "rehearsal.json": "1310c352a336f39ad20d25d7703cb81c7cfcd0f2024f2fdc2a6805d38e78f4a5",
+    "restore-smoke.log": "9a3be110c2e2df81a50e967bd2115b72dfe8dd031f92592e76181547205964ab",
+    "npm-audit.json": "5cad5fcff4156a6ef6e55d48e4ce54b4ebcddfa777f0d19efc8abc458641faab",
+    "fixture-acl.json": "7e1ffd2ab2b5e3fbc516d3d4126489192090e0769775f9020a6392002822ec3b"
+  }
+}

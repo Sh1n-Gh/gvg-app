@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sub-Admin — Gym vs Gym Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-badge">🔧</span>
+    <div>
+      <h1 id="gym-name">Sub-Admin</h1>
+      <p class="muted">Khu vực quản trị của Gym</p>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div id="lock-box" class="card form-card">
+    <label>Mật khẩu Admin của Gym
+      <input type="password" id="admin-code" autocomplete="current-password" placeholder="Nhập mật khẩu">
+    </label>
+    <button id="unlock-btn" class="btn btn-primary">Đăng nhập</button>
+    <p id="lock-msg" class="msg"></p>
+  </div>
+
+  <div id="panel" class="hidden">
+
+    <nav class="tabs admin-tabs" id="admin-tabs" aria-label="Khu vực quản trị Gym">
+      <button class="tab-btn active" data-admin-tab="members">👥 Quản lý thành viên</button>
+      <button class="tab-btn" data-admin-tab="entries">📝 Lượt chơi</button>
+    </nav>
+
+    <section id="admin-tab-members" class="tab-panel active">
+
+      <div id="new-season-banner" class="new-season-banner hidden">
+        <span>🆕 Season mới đã sẵn sàng: <strong id="new-season-name"></strong></span>
+        <button id="open-switch-wizard" class="btn btn-primary">Chuyển sang Season mới</button>
+      </div>
+
+      <div id="switch-wizard" class="card form-card hidden">
+        <h3>Chuyển sang Season mới</h3>
+        <p class="hint">Bước 1: danh sách dưới đây đã copy sẵn từ roster hiện tại (tự loại người đang bị khoá). Bước 2: sửa/thêm/xoá nếu cần. Bước 3: bấm Xác nhận.</p>
+        <div id="wizard-rows"></div>
+        <button id="wizard-add-row" class="btn btn-secondary" type="button">+ Thêm thành viên</button>
+        <button id="wizard-submit" class="btn btn-primary">✅ Xác nhận chuyển Season</button>
+        <button id="wizard-cancel" class="btn btn-secondary" type="button">Huỷ</button>
+        <p id="wizard-msg" class="msg"></p>
+      </div>
+
+      <div class="card form-card">
+        <h3>👥 Thành viên</h3>
+        <div id="member-list" class="card-list"></div>
+        <h4 style="font-family:var(--font-display);font-size:13px;margin-top:16px;">Thêm thành viên mới</h4>
+        <div id="new-member-rows"></div>
+        <button id="add-member-row" class="btn btn-secondary" type="button">+ Thêm dòng</button>
+        <button id="save-new-members" class="btn btn-primary">Lưu thành viên mới</button>
+        <p id="member-msg" class="msg"></p>
+      </div>
+    </section>
+
+    <section id="admin-tab-entries" class="tab-panel">
+      <div class="card form-card">
+        <h3>📝 Ghi nhận lượt chơi</h3>
+        <p class="hint" id="active-round-hint"></p>
+        <label>Map <select id="entry-map"></select></label>
+        <label>Thành viên <select id="entry-member"></select></label>
+        <label>Số vé đã dùng
+          <select id="entry-tickets"><option value="1">1 vé</option><option value="2">2 vé</option><option value="3">3 vé</option></select>
+        </label>
+        <label>Điểm đạt được <input type="number" id="entry-points" min="1" step="1" placeholder="VD: 4000"></label>
+        <button id="entry-submit" class="btn btn-primary">Ghi nhận</button>
+        <p id="entry-msg" class="msg"></p>
+      </div>
+
+      <div class="card form-card">
+        <h3>📋 Quản lý lượt chơi đã ghi</h3>
+        <div class="log-filters" aria-label="Bộ lọc lượt chơi">
+          <label>Thành viên
+            <select id="log-filter-member"><option value="">Tất cả thành viên</option></select>
+          </label>
+          <label>Round
+            <select id="log-filter-round"><option value="">Tất cả Round</option></select>
+          </label>
+          <label>Map
+            <select id="log-filter-map"><option value="">Tất cả Map</option></select>
+          </label>
+          <button id="log-filter-reset" class="btn btn-secondary" type="button">Xoá bộ lọc</button>
+        </div>
+        <p id="log-filter-summary" class="hint log-filter-summary"></p>
+        <div id="admin-log-list"></div>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script src="/auth-client.js"></script>
+<script src="/pokemon-types.js"></script>
+<script src="/admin-utils.js"></script>
+<script src="/admin.js"></script>
+</body>
+</html>
+

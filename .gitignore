@@ -1,0 +1,60 @@
+# Node.js dependencies and package-manager diagnostics
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment files; keep the committed template
+.env
+.env.*
+!.env.example
+
+# SQLite runtime databases and sidecar files
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite3
+*.sqlite3-wal
+*.sqlite3-shm
+
+# Logs and test coverage
+logs/
+*.log
+coverage/
+.nyc_output/
+
+# Backups
+backup/
+backups/
+*.bak
+*.backup
+
+# Runtime uploads; retain directory placeholders
+public/uploads/*
+!public/uploads/.gitkeep
+!public/uploads/map-images/
+public/uploads/map-images/*
+!public/uploads/map-images/.gitkeep
+
+# Generated season snapshots; retain the source directory placeholder
+season-configs/*.json
+!season-configs/.gitkeep
+
+# Temporary/editor/OS files
+tmp/
+temp/
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+# Incomplete SQLite backup artifacts
+*.sqlite3.partial
+*.sqlite3.partial-*

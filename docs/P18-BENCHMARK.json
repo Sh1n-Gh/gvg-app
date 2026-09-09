@@ -1,0 +1,240 @@
+{
+  "node": "v24.19.0",
+  "sqlite": "3.53.4",
+  "seasons": 10,
+  "maps": 5,
+  "members": 1000,
+  "entries": 100000,
+  "stages": [
+    {
+      "label": "baseline",
+      "bytes": 5681152,
+      "queries": [
+        {
+          "name": "gym-public.js:140",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) AS total_points\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id AND e.gym_season_id = m.gym_season_id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 91.227,
+          "p95_ms": 94.769
+        },
+        {
+          "name": "gym-public.js:149",
+          "sql": "\n    SELECT member_id, season_template_map_id AS map_id, SUM(points_scored) AS total_points\n    FROM entries\n    WHERE gym_season_id = ?\n    GROUP BY member_id, season_template_map_id\n  ",
+          "plan": [
+            "SEARCH entries USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "USE TEMP B-TREE FOR GROUP BY"
+          ],
+          "p50_ms": 3.588,
+          "p95_ms": 5.002
+        },
+        {
+          "name": "gym-public.js:155",
+          "sql": "\n    SELECT e.round_number, e.season_template_map_id AS map_id, e.tickets_used\n    FROM entries e\n    JOIN season_template_maps mp ON mp.id = e.season_template_map_id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.round_number, mp.order_index, e.created_at, e.id\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 7.606,
+          "p95_ms": 8.605
+        },
+        {
+          "name": "gym-public.js:203",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) as total_points,\n           COALESCE(SUM(e.tickets_used), 0) as tickets_used\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY m.is_banned ASC, total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "BLOOM FILTER ON e (member_id=?)",
+            "SEARCH e USING AUTOMATIC COVERING INDEX (member_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 63.787,
+          "p95_ms": 66.622
+        },
+        {
+          "name": "gym-public.js:230",
+          "sql": "\n    SELECT e.id, e.member_id, e.season_template_map_id,\n           e.round_number, e.tickets_used, e.points_scored, e.created_at, e.updated_at,\n           m.name as member_name, m.avatar_url as member_avatar,\n           mp.name as map_name, mp.image_url as map_avatar\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 12.912,
+          "p95_ms": 13.452
+        },
+        {
+          "name": "admin log",
+          "sql": "\n    SELECT e.*, m.name as member_name, mp.name as map_name, mp.image_url as map_image, mp.type_weakness as map_type\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 13.013,
+          "p95_ms": 13.422
+        }
+      ],
+      "write_1000_rollback": {
+        "p50_ms": 2.573,
+        "p95_ms": 4.205
+      }
+    },
+    {
+      "label": "idx_entries_member_season",
+      "bytes": 6942720,
+      "queries": [
+        {
+          "name": "gym-public.js:140",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) AS total_points\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id AND e.gym_season_id = m.gym_season_id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "SEARCH e USING INDEX idx_entries_member_season (member_id=? AND gym_season_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 2.985,
+          "p95_ms": 4.42
+        },
+        {
+          "name": "gym-public.js:149",
+          "sql": "\n    SELECT member_id, season_template_map_id AS map_id, SUM(points_scored) AS total_points\n    FROM entries\n    WHERE gym_season_id = ?\n    GROUP BY member_id, season_template_map_id\n  ",
+          "plan": [
+            "SEARCH entries USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "USE TEMP B-TREE FOR GROUP BY"
+          ],
+          "p50_ms": 3.518,
+          "p95_ms": 4.857
+        },
+        {
+          "name": "gym-public.js:155",
+          "sql": "\n    SELECT e.round_number, e.season_template_map_id AS map_id, e.tickets_used\n    FROM entries e\n    JOIN season_template_maps mp ON mp.id = e.season_template_map_id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.round_number, mp.order_index, e.created_at, e.id\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 7.29,
+          "p95_ms": 8.215
+        },
+        {
+          "name": "gym-public.js:203",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) as total_points,\n           COALESCE(SUM(e.tickets_used), 0) as tickets_used\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY m.is_banned ASC, total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "SEARCH e USING INDEX idx_entries_member_season (member_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 3.034,
+          "p95_ms": 4.166
+        },
+        {
+          "name": "gym-public.js:230",
+          "sql": "\n    SELECT e.id, e.member_id, e.season_template_map_id,\n           e.round_number, e.tickets_used, e.points_scored, e.created_at, e.updated_at,\n           m.name as member_name, m.avatar_url as member_avatar,\n           mp.name as map_name, mp.image_url as map_avatar\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 12.923,
+          "p95_ms": 13.55
+        },
+        {
+          "name": "admin log",
+          "sql": "\n    SELECT e.*, m.name as member_name, mp.name as map_name, mp.image_url as map_image, mp.type_weakness as map_type\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 12.997,
+          "p95_ms": 13.57
+        }
+      ],
+      "write_1000_rollback": {
+        "p50_ms": 3.335,
+        "p95_ms": 4.379
+      }
+    },
+    {
+      "label": "idx_entries_season_created",
+      "bytes": 10436608,
+      "queries": [
+        {
+          "name": "gym-public.js:140",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) AS total_points\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id AND e.gym_season_id = m.gym_season_id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "SEARCH e USING INDEX idx_entries_member_season (member_id=? AND gym_season_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 2.905,
+          "p95_ms": 3.924
+        },
+        {
+          "name": "gym-public.js:149",
+          "sql": "\n    SELECT member_id, season_template_map_id AS map_id, SUM(points_scored) AS total_points\n    FROM entries\n    WHERE gym_season_id = ?\n    GROUP BY member_id, season_template_map_id\n  ",
+          "plan": [
+            "SEARCH entries USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "USE TEMP B-TREE FOR GROUP BY"
+          ],
+          "p50_ms": 3.518,
+          "p95_ms": 4.631
+        },
+        {
+          "name": "gym-public.js:155",
+          "sql": "\n    SELECT e.round_number, e.season_template_map_id AS map_id, e.tickets_used\n    FROM entries e\n    JOIN season_template_maps mp ON mp.id = e.season_template_map_id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.round_number, mp.order_index, e.created_at, e.id\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_gymseason (gym_season_id=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 6.958,
+          "p95_ms": 8.066
+        },
+        {
+          "name": "gym-public.js:203",
+          "sql": "\n    SELECT m.id, m.name, m.avatar_url, m.is_banned,\n           COALESCE(SUM(e.points_scored), 0) as total_points,\n           COALESCE(SUM(e.tickets_used), 0) as tickets_used\n    FROM members m\n    LEFT JOIN entries e ON e.member_id = m.id\n    WHERE m.gym_season_id = ?\n    GROUP BY m.id\n    ORDER BY m.is_banned ASC, total_points DESC, m.name COLLATE NOCASE ASC\n  ",
+          "plan": [
+            "SEARCH m USING INDEX idx_members_gymseason (gym_season_id=?)",
+            "SEARCH e USING INDEX idx_entries_member_season (member_id=?) LEFT-JOIN",
+            "USE TEMP B-TREE FOR ORDER BY"
+          ],
+          "p50_ms": 3.023,
+          "p95_ms": 4.534
+        },
+        {
+          "name": "gym-public.js:230",
+          "sql": "\n    SELECT e.id, e.member_id, e.season_template_map_id,\n           e.round_number, e.tickets_used, e.points_scored, e.created_at, e.updated_at,\n           m.name as member_name, m.avatar_url as member_avatar,\n           mp.name as map_name, mp.image_url as map_avatar\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_season_created (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)"
+          ],
+          "p50_ms": 0.338,
+          "p95_ms": 0.706
+        },
+        {
+          "name": "admin log",
+          "sql": "\n    SELECT e.*, m.name as member_name, mp.name as map_name, mp.image_url as map_image, mp.type_weakness as map_type\n    FROM entries e\n    JOIN members m ON e.member_id = m.id\n    JOIN season_template_maps mp ON e.season_template_map_id = mp.id\n    WHERE e.gym_season_id = ?\n    ORDER BY e.created_at DESC\n    LIMIT 300\n  ",
+          "plan": [
+            "SEARCH e USING INDEX idx_entries_season_created (gym_season_id=?)",
+            "SEARCH m USING INTEGER PRIMARY KEY (rowid=?)",
+            "SEARCH mp USING INTEGER PRIMARY KEY (rowid=?)"
+          ],
+          "p50_ms": 0.343,
+          "p95_ms": 0.378
+        }
+      ],
+      "write_1000_rollback": {
+        "p50_ms": 4.38,
+        "p95_ms": 5.458
+      }
+    }
+  ]
+}

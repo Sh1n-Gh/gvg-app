@@ -1,0 +1,2641 @@
+{
+  "at": "2026-09-09T01:46:22.783Z",
+  "node": "v24.19.0",
+  "os": "win32 10.0.19045",
+  "cpu": "Intel(R) Core(TM) i3-9100F CPU @ 3.60GHz",
+  "fixture": {
+    "entries": 10000,
+    "members": 100,
+    "maps": 5,
+    "nodeInstances": 1
+  },
+  "loadAt": "2026-09-09T01:39:33.747Z",
+  "load": [
+    {
+      "concurrency": 1,
+      "elapsed_ms": 4749,
+      "requests_per_second": 50.54,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 18.38,
+          "p95_ms": 32.12,
+          "p99_ms": 34.43,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 26.91,
+          "p95_ms": 29.1,
+          "p99_ms": 39.25,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 31.54,
+          "p95_ms": 33.82,
+          "p99_ms": 34.55,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 25.08,
+          "p95_ms": 26.31,
+          "p99_ms": 26.76,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 7.26,
+          "p95_ms": 8.35,
+          "p99_ms": 8.82,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 16.32,
+          "p95_ms": 19.2,
+          "p99_ms": 32.88,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 4,
+      "elapsed_ms": 2419,
+      "requests_per_second": 99.2,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 39.49,
+          "p95_ms": 58.52,
+          "p99_ms": 77.67,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 29.45,
+          "p95_ms": 41.62,
+          "p99_ms": 51.31,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 41.61,
+          "p95_ms": 57.69,
+          "p99_ms": 60.38,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 51.18,
+          "p95_ms": 70.56,
+          "p99_ms": 80.75,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 51.6,
+          "p95_ms": 68.77,
+          "p99_ms": 87.48,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 27.36,
+          "p95_ms": 44.17,
+          "p99_ms": 54.39,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 8,
+      "elapsed_ms": 2224,
+      "requests_per_second": 107.92,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 74.5,
+          "p95_ms": 102.16,
+          "p99_ms": 120.54,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 70.89,
+          "p95_ms": 95.85,
+          "p99_ms": 107.71,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 85.43,
+          "p95_ms": 108.71,
+          "p99_ms": 120.89,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 86.35,
+          "p95_ms": 109.45,
+          "p99_ms": 120.86,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 72.87,
+          "p95_ms": 96.84,
+          "p99_ms": 118.07,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 60.29,
+          "p95_ms": 85.1,
+          "p99_ms": 119.59,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 16,
+      "elapsed_ms": 2222,
+      "requests_per_second": 107.99,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 147.29,
+          "p95_ms": 194.94,
+          "p99_ms": 206.71,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 143.1,
+          "p95_ms": 168.87,
+          "p99_ms": 193.62,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 152.04,
+          "p95_ms": 176.22,
+          "p99_ms": 199.82,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 155.08,
+          "p95_ms": 178.14,
+          "p99_ms": 194.77,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 156.44,
+          "p95_ms": 186.2,
+          "p99_ms": 222.55,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 135.16,
+          "p95_ms": 202.03,
+          "p99_ms": 207.15,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 32,
+      "elapsed_ms": 2226,
+      "requests_per_second": 107.83,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 293.23,
+          "p95_ms": 364.59,
+          "p99_ms": 416.25,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 283.04,
+          "p95_ms": 356.85,
+          "p99_ms": 396.01,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 294.47,
+          "p95_ms": 362.24,
+          "p99_ms": 409.77,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 295.53,
+          "p95_ms": 369.84,
+          "p99_ms": 416.25,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 295.46,
+          "p95_ms": 358,
+          "p99_ms": 403.83,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 276.74,
+          "p95_ms": 359.1,
+          "p99_ms": 428.29,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 64,
+      "elapsed_ms": 2278,
+      "requests_per_second": 105.34,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 580.47,
+          "p95_ms": 702.85,
+          "p99_ms": 832.81,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 592.81,
+          "p95_ms": 658.94,
+          "p99_ms": 679.08,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 607.49,
+          "p95_ms": 670.91,
+          "p99_ms": 702.85,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 606.64,
+          "p95_ms": 678.34,
+          "p99_ms": 716.12,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 592.73,
+          "p95_ms": 671.12,
+          "p99_ms": 698.95,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 473.81,
+          "p95_ms": 776.04,
+          "p99_ms": 896.2,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "concurrency": 128,
+      "elapsed_ms": 2309,
+      "requests_per_second": 103.92,
+      "groups": {
+        "all": {
+          "requests": 240,
+          "p50_ms": 971.96,
+          "p95_ms": 1383.7,
+          "p99_ms": 1677.13,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 240
+          }
+        },
+        "state": {
+          "requests": 40,
+          "p50_ms": 1121.49,
+          "p95_ms": 1324.16,
+          "p99_ms": 1338.63,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "overview": {
+          "requests": 40,
+          "p50_ms": 1138.24,
+          "p95_ms": 1329.81,
+          "p99_ms": 1347.96,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "leaderboard": {
+          "requests": 40,
+          "p50_ms": 1149.77,
+          "p95_ms": 1335.52,
+          "p99_ms": 1356.15,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "log": {
+          "requests": 40,
+          "p50_ms": 1151.56,
+          "p95_ms": 1333.62,
+          "p99_ms": 1349.8,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 40
+          }
+        },
+        "write": {
+          "requests": 80,
+          "p50_ms": 472.05,
+          "p95_ms": 1624.42,
+          "p99_ms": 1747.84,
+          "errors": 0,
+          "error_rate": 0,
+          "statuses": {
+            "200": 80
+          }
+        }
+      },
+      "integrity": {
+        "entries": 10080,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    }
+  ],
+  "browsers": [
+    {
+      "browser": "chrome",
+      "version": "152.0.7977.76",
+      "views": [
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        }
+      ],
+      "errors": [],
+      "links": [
+        {
+          "route": "/",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/index.js",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/master.js",
+          "status": 200
+        },
+        {
+          "route": "/g/fixture-1",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/admin-utils.js",
+          "status": 200
+        },
+        {
+          "route": "/dashboard.js",
+          "status": 200
+        },
+        {
+          "route": "/admin.js",
+          "status": 200
+        },
+        {
+          "route": "/missing-p23",
+          "status": 404,
+          "canaryLeak": false
+        },
+        {
+          "route": "/",
+          "status": 200
+        },
+        {
+          "route": "/uploads/map-images/p23-error",
+          "status": 500,
+          "canaryLeak": false
+        }
+      ],
+      "filters": [
+        {
+          "width": 320,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 30.5,
+          "p95_ms": 53.5,
+          "p99_ms": 55.4
+        },
+        {
+          "width": 320,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 30.7,
+          "p95_ms": 31.8,
+          "p99_ms": 32
+        },
+        {
+          "width": 360,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 29.5,
+          "p95_ms": 52,
+          "p99_ms": 56.3
+        },
+        {
+          "width": 360,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.8,
+          "p95_ms": 32.1,
+          "p99_ms": 32.2
+        },
+        {
+          "width": 390,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 32.1,
+          "p95_ms": 53.3,
+          "p99_ms": 56.6
+        },
+        {
+          "width": 390,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.7,
+          "p95_ms": 32,
+          "p99_ms": 32.1
+        },
+        {
+          "width": 412,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 21.9,
+          "p95_ms": 44.8,
+          "p99_ms": 45.5
+        },
+        {
+          "width": 412,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.2,
+          "p95_ms": 31.6,
+          "p99_ms": 32.1
+        },
+        {
+          "width": 768,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 28.7,
+          "p95_ms": 46.4,
+          "p99_ms": 47.7
+        },
+        {
+          "width": 768,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.8,
+          "p95_ms": 32.4,
+          "p99_ms": 32.6
+        },
+        {
+          "width": 1024,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 26.3,
+          "p95_ms": 46.2,
+          "p99_ms": 46.6
+        },
+        {
+          "width": 1024,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.2,
+          "p95_ms": 32,
+          "p99_ms": 32.1
+        },
+        {
+          "width": 1440,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 27.6,
+          "p95_ms": 46.5,
+          "p99_ms": 49.5
+        },
+        {
+          "width": 1440,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.7,
+          "p95_ms": 32.1,
+          "p99_ms": 32.6
+        }
+      ],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "keyboard": {
+        "tag": "BUTTON",
+        "text": "Bảng điều khiển",
+        "outline": "auto",
+        "leaderboardActivated": true
+      },
+      "integrity": {
+        "entries": 10000,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "browser": "msedge",
+      "version": "152.0.4191.66",
+      "views": [
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        }
+      ],
+      "errors": [],
+      "links": [
+        {
+          "route": "/",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/index.js",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/master.js",
+          "status": 200
+        },
+        {
+          "route": "/g/fixture-1",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/admin-utils.js",
+          "status": 200
+        },
+        {
+          "route": "/dashboard.js",
+          "status": 200
+        },
+        {
+          "route": "/admin.js",
+          "status": 200
+        },
+        {
+          "route": "/missing-p23",
+          "status": 404,
+          "canaryLeak": false
+        },
+        {
+          "route": "/",
+          "status": 200
+        },
+        {
+          "route": "/uploads/map-images/p23-error",
+          "status": 500,
+          "canaryLeak": false
+        }
+      ],
+      "filters": [
+        {
+          "width": 320,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 25.3,
+          "p95_ms": 54.3,
+          "p99_ms": 55.7
+        },
+        {
+          "width": 320,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.4,
+          "p95_ms": 32.2,
+          "p99_ms": 32.4
+        },
+        {
+          "width": 360,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 29.3,
+          "p95_ms": 43.9,
+          "p99_ms": 49.9
+        },
+        {
+          "width": 360,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.4,
+          "p95_ms": 31.8,
+          "p99_ms": 32
+        },
+        {
+          "width": 390,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 31.3,
+          "p95_ms": 47.4,
+          "p99_ms": 49.7
+        },
+        {
+          "width": 390,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 30.1,
+          "p95_ms": 31.9,
+          "p99_ms": 32
+        },
+        {
+          "width": 412,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 29.4,
+          "p95_ms": 50.1,
+          "p99_ms": 52.5
+        },
+        {
+          "width": 412,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.7,
+          "p95_ms": 32.2,
+          "p99_ms": 32.9
+        },
+        {
+          "width": 768,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 29.6,
+          "p95_ms": 45.9,
+          "p99_ms": 47.2
+        },
+        {
+          "width": 768,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31.7,
+          "p95_ms": 32.6,
+          "p99_ms": 32.9
+        },
+        {
+          "width": 1024,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 26.1,
+          "p95_ms": 45,
+          "p99_ms": 45.6
+        },
+        {
+          "width": 1024,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 30.7,
+          "p95_ms": 31.5,
+          "p99_ms": 31.6
+        },
+        {
+          "width": 1440,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 21.5,
+          "p95_ms": 46.2,
+          "p99_ms": 47
+        },
+        {
+          "width": 1440,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 30.9,
+          "p95_ms": 31.4,
+          "p99_ms": 31.4
+        }
+      ],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "net::ERR_FAILED"
+        }
+      ],
+      "keyboard": {
+        "tag": "BUTTON",
+        "text": "Bảng điều khiển",
+        "outline": "auto",
+        "leaderboardActivated": true
+      },
+      "integrity": {
+        "entries": 10000,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    },
+    {
+      "browser": "firefox",
+      "version": "153.0",
+      "views": [
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 320,
+          "height": 740,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 360,
+          "height": 800,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 390,
+          "height": 844,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 412,
+          "height": 915,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 768,
+          "height": 1024,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1024,
+          "height": 768,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "dashboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "leaderboard",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          },
+          "clippedTicketGroups": 0
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "log",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        },
+        {
+          "width": 1440,
+          "height": 900,
+          "tab": "admin",
+          "overflow": false,
+          "missingNames": [],
+          "imagesWithoutAlt": 0,
+          "meta": {
+            "title": "Gym vs Gym Tracker",
+            "lang": "vi",
+            "viewport": true,
+            "description": true,
+            "favicon": true
+          }
+        }
+      ],
+      "errors": [],
+      "links": [
+        {
+          "route": "/",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/index.js",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/master",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/master.js",
+          "status": 200
+        },
+        {
+          "route": "/g/fixture-1",
+          "status": 200,
+          "canaryLeak": false
+        },
+        {
+          "route": "/favicon.svg",
+          "status": 200
+        },
+        {
+          "external": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "status": 200
+        },
+        {
+          "route": "/style.css",
+          "status": 200
+        },
+        {
+          "route": "/auth-client.js",
+          "status": 200
+        },
+        {
+          "route": "/pokemon-types.js",
+          "status": 200
+        },
+        {
+          "route": "/admin-utils.js",
+          "status": 200
+        },
+        {
+          "route": "/dashboard.js",
+          "status": 200
+        },
+        {
+          "route": "/admin.js",
+          "status": 200
+        },
+        {
+          "route": "/missing-p23",
+          "status": 404,
+          "canaryLeak": false
+        },
+        {
+          "route": "/",
+          "status": 200
+        },
+        {
+          "route": "/uploads/map-images/p23-error",
+          "status": 500,
+          "canaryLeak": false
+        },
+        {
+          "external": "resource://content-accessible/plaintext.css",
+          "checked": false
+        }
+      ],
+      "filters": [
+        {
+          "width": 320,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 32,
+          "p95_ms": 72,
+          "p99_ms": 74
+        },
+        {
+          "width": 320,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 35,
+          "p99_ms": 36
+        },
+        {
+          "width": 360,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 68,
+          "p99_ms": 70
+        },
+        {
+          "width": 360,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 32,
+          "p99_ms": 32
+        },
+        {
+          "width": 390,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 30,
+          "p95_ms": 69,
+          "p99_ms": 70
+        },
+        {
+          "width": 390,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 32,
+          "p99_ms": 32
+        },
+        {
+          "width": 412,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 32,
+          "p95_ms": 67,
+          "p99_ms": 68
+        },
+        {
+          "width": 412,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 33,
+          "p99_ms": 36
+        },
+        {
+          "width": 768,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 32,
+          "p95_ms": 71,
+          "p99_ms": 72
+        },
+        {
+          "width": 768,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 32,
+          "p99_ms": 33
+        },
+        {
+          "width": 1024,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 33,
+          "p95_ms": 66,
+          "p99_ms": 67
+        },
+        {
+          "width": 1024,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 33,
+          "p99_ms": 34
+        },
+        {
+          "width": 1440,
+          "tab": "log",
+          "samples": 20,
+          "p50_ms": 31,
+          "p95_ms": 70,
+          "p99_ms": 91
+        },
+        {
+          "width": 1440,
+          "tab": "admin",
+          "samples": 20,
+          "p50_ms": 30,
+          "p95_ms": 35,
+          "p99_ms": 40
+        }
+      ],
+      "failedRequests": [
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "NS_ERROR_FAILURE"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "NS_ERROR_FAILURE"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "NS_ERROR_FAILURE"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "NS_ERROR_FAILURE"
+        },
+        {
+          "url": "https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap",
+          "error": "NS_ERROR_FAILURE"
+        }
+      ],
+      "keyboard": {
+        "tag": "BUTTON",
+        "text": "Bảng điều khiển",
+        "outline": "auto",
+        "leaderboardActivated": true
+      },
+      "integrity": {
+        "entries": 10000,
+        "integrity": "ok",
+        "foreignKeys": [],
+        "busy": 0
+      }
+    }
+  ]
+}

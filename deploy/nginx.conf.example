@@ -1,0 +1,75 @@
+# TEMPLATE ONLY. Include inside nginx http {} after replacing gvg.example.invalid
+# and certificate paths. Requires nginx >= 1.19.4. No root/alias to the repository.
+# P20: no URL/query/IP/header fields in access telemetry.
+log_format gvg_safe escape=json '{"event":"proxy_request","status":$status,"duration_s":$request_time,"request_id":"$upstream_http_x_request_id"}';
+access_log /var/log/nginx/gvg-access.log gvg_safe;
+# Nginx error text may contain request URLs/credentials; do not persist it.
+# See docs/OBSERVABILITY.md for restricted diagnostic procedures.
+error_log /dev/null;
+limit_req_zone $binary_remote_addr zone=gvg_requests:10m rate=10r/s;
+limit_conn_zone $binary_remote_addr zone=gvg_connections:10m;
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+server {
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
+    server_name _;
+    ssl_reject_handshake on;
+    return 444;
+}
+server {
+    listen 80;
+    listen [::]:80;
+    server_name gvg.example.invalid;
+    return 308 https://gvg.example.invalid$request_uri;
+}
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name gvg.example.invalid;
+    ssl_certificate /etc/letsencrypt/live/gvg.example.invalid/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/gvg.example.invalid/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    server_tokens off;
+    # Also reject a mismatched Host after a valid SNI handshake.
+    if ($host != gvg.example.invalid) { return 444; }
+    client_max_body_size 128k;
+    client_header_timeout 10s;
+    client_body_timeout 15s;
+    send_timeout 30s;
+    keepalive_timeout 30s;
+    limit_req zone=gvg_requests burst=60 nodelay;
+    limit_req_status 429;
+    limit_conn gvg_connections 20;
+    limit_conn_status 429;
+    # Overwrite client forwarding headers; this template has NO CDN/LB before nginx.
+    proxy_set_header Host gvg.example.invalid;
+    proxy_set_header X-Forwarded-Host gvg.example.invalid;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Port 443;
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header Forwarded "";
+    proxy_set_header Connection "";
+    proxy_http_version 1.1;
+    proxy_connect_timeout 5s;
+    proxy_read_timeout 30s;
+    proxy_send_timeout 30s;
+    proxy_request_buffering on;
+    proxy_cache off;
+    # Defense in depth; only Express public/ is a static root.
+    location ~ /\. { return 404; }
+    location ~* ^/(?:db|backup|backups|source|src|auth|security|routes|engine|scripts|docs|deploy|node_modules|season-configs)(?:/|$) { return 404; }
+    location ~* \.(?:db(?:-wal|-shm)?|sqlite(?:3)?(?:-wal|-shm)?|bak|sql|env|log)$ { return 404; }
+    location ~* ^/master/map-images/?$ {
+        client_max_body_size 5m;
+        proxy_pass http://127.0.0.1:3000;
+    }
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+    }
+}

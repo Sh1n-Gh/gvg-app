@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym vs Gym Tracker</title>
+<meta name="description" content="Theo dõi tiến độ, bảng xếp hạng và lịch sử lượt chơi Gym vs Gym.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="home-wrap">
+    <span class="brand-badge" style="margin:0 auto 16px;">⚡</span>
+    <h1 class="home-title">Gym vs Gym Tracker</h1>
+    <p class="muted">Theo dõi tiến độ event Gym vs Gym theo thời gian thực</p>
+
+    <div class="home-card">
+      <label style="text-align:left;">Nhập mã Gym (slug) để xem
+        <input type="text" id="slug-input" placeholder="VD: lauga-gym">
+      </label>
+      <button class="btn btn-primary" id="go-btn" style="width:100%;margin-top:10px;">Xem Dashboard</button>
+      <p class="msg error" id="err-msg"></p>
+    </div>
+  </div>
+
+<script src="/index.js"></script>
+</body>
+</html>

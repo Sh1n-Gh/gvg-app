@@ -1,0 +1,30 @@
+# Template for Linux/systemd; fill paths and create writable directories first.
+[Unit]
+Description=GvG Node application
+After=network.target
+
+[Service]
+Type=simple
+User=gvg
+Group=gvg
+WorkingDirectory=/srv/gvg/app
+EnvironmentFile=/etc/gvg/gvg.env
+Environment=NODE_ENV=production
+ExecStart=/usr/bin/node /srv/gvg/app/server.js
+Restart=on-failure
+RestartSec=5
+KillSignal=SIGTERM
+TimeoutStopSec=45s
+StandardOutput=journal
+StandardError=journal
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=strict
+ReadWritePaths=/var/lib/gvg /srv/gvg/app/public/uploads/map-images /srv/gvg/app/season-configs
+CapabilityBoundingSet=
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target

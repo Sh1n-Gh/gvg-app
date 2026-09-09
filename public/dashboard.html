@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym vs Gym Tracker</title>
+<meta name="description" content="Theo dõi tiến độ, bảng xếp hạng và lịch sử lượt chơi Gym vs Gym.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-badge">⚡</span>
+    <div>
+      <h1 id="gym-name">Đang tải...</h1>
+      <p class="muted" id="season-name"></p>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" id="public-tabs">
+  <button class="tab-btn active" data-tab="dashboard">Bảng điều khiển</button>
+  <button class="tab-btn" data-tab="leaderboard">Xếp hạng</button>
+  <button class="tab-btn" data-tab="log">Lịch sử</button>
+  <button class="tab-btn" data-tab="seasons">Các mùa</button>
+  <button class="tab-btn" data-tab="admin">🔒 Admin</button>
+</nav>
+
+<main>
+  <section id="tab-dashboard" class="tab-panel public-tab-panel active">
+    <div id="completed-banner" class="completed-banner hidden">
+      🏆 Gym đã hoàn thành toàn bộ nội dung hiện có của mùa này!
+    </div>
+    <div class="game-banner">
+      <div class="game-banner-title">GYM LEADERS ASSEMBLED</div>
+      <div class="game-banner-row">
+        <span class="round-chip" id="round-chip">—</span>
+      </div>
+      <div class="combined-score-box">
+        <span class="combined-label">Combined Score</span>
+        <span class="combined-value" id="combined-score">0</span>
+        <span class="combined-sub">pts</span>
+      </div>
+      <div class="tickets-left-box">🎫 Tổng vé chưa sử dụng: <strong id="tickets-left">0</strong></div>
+    </div>
+    <div id="map-grid" class="map-cards"></div>
+
+    <section class="card overview-card">
+      <h2 class="section-title">Tổng điểm thành viên theo Map</h2>
+      <p class="hint">Ô có tổng điểm cao hơn sẽ có nền xanh đậm hơn. Thành viên bị khoá vẫn được giữ lại để đối soát lịch sử.</p>
+      <div id="score-overview" class="overview-table-wrap" aria-live="polite"></div>
+    </section>
+
+    <section class="card overview-card">
+      <h2 class="section-title">Vé sử dụng theo Round và Map</h2>
+      <p class="hint">Các số trong một ô được xếp theo thứ tự ghi lượt chơi, ví dụ 1-3-2.</p>
+      <div id="ticket-overview" class="overview-table-wrap" aria-live="polite"></div>
+    </section>
+  </section>
+
+  <section id="tab-leaderboard" class="tab-panel public-tab-panel">
+    <h2 class="section-title">Bảng xếp hạng đóng góp</h2>
+    <div id="leaderboard-list" class="card-list"></div>
+  </section>
+
+  <section id="tab-log" class="tab-panel public-tab-panel">
+    <h2 class="section-title">Lịch sử lượt chơi</h2>
+    <div class="card form-card public-log-filter-card">
+      <div class="log-filters" aria-label="Bộ lọc lịch sử lượt chơi">
+        <label>Thành viên
+          <select id="public-log-filter-member"><option value="">Tất cả thành viên</option></select>
+        </label>
+        <label>Round
+          <select id="public-log-filter-round"><option value="">Tất cả Round</option></select>
+        </label>
+        <label>Map
+          <select id="public-log-filter-map"><option value="">Tất cả Map</option></select>
+        </label>
+        <button id="public-log-filter-reset" class="btn btn-secondary" type="button">Xoá bộ lọc</button>
+      </div>
+      <p id="public-log-filter-summary" class="hint log-filter-summary"></p>
+    </div>
+    <div id="log-list"></div>
+  </section>
+
+  <section id="tab-seasons" class="tab-panel public-tab-panel">
+    <h2 class="section-title">Các mùa đã tham gia</h2>
+    <div id="seasons-list" class="card-list"></div>
+  </section>
+
+  <section id="tab-admin" class="tab-panel public-tab-panel">
+    <h2 class="section-title">Quản trị Gym</h2>
+    <div id="lock-box" class="card form-card">
+      <label>Mật khẩu Admin của Gym
+        <input type="password" id="admin-code" autocomplete="current-password" placeholder="Nhập mật khẩu">
+      </label>
+      <button id="unlock-btn" class="btn btn-primary">Đăng nhập</button>
+      <p id="lock-msg" class="msg"></p>
+    </div>
+
+    <div id="panel" class="hidden">
+      <nav class="tabs admin-tabs" id="admin-tabs" aria-label="Khu vực quản trị Gym">
+        <button class="tab-btn active" data-admin-tab="members">👥 Quản lý thành viên</button>
+        <button class="tab-btn" data-admin-tab="entries">📝 Lượt chơi</button>
+      </nav>
+
+      <section id="admin-tab-members" class="tab-panel active">
+        <div id="new-season-banner" class="new-season-banner hidden">
+          <span>🆕 Season mới đã sẵn sàng: <strong id="new-season-name"></strong></span>
+          <button id="open-switch-wizard" class="btn btn-primary">Chuyển sang Season mới</button>
+        </div>
+
+        <div id="switch-wizard" class="card form-card hidden">
+          <h3>Chuyển sang Season mới</h3>
+          <p class="hint">Bước 1: danh sách dưới đây đã copy sẵn từ roster hiện tại (tự loại người đang bị khoá). Bước 2: sửa/thêm/xoá nếu cần. Bước 3: bấm Xác nhận.</p>
+          <div id="wizard-rows"></div>
+          <button id="wizard-add-row" class="btn btn-secondary" type="button">+ Thêm thành viên</button>
+          <button id="wizard-submit" class="btn btn-primary">✅ Xác nhận chuyển Season</button>
+          <button id="wizard-cancel" class="btn btn-secondary" type="button">Huỷ</button>
+          <p id="wizard-msg" class="msg"></p>
+        </div>
+
+        <div class="card form-card">
+          <h3>👥 Thành viên</h3>
+          <div id="member-list" class="card-list"></div>
+          <h4 style="font-family:var(--font-display);font-size:13px;margin-top:16px;">Thêm thành viên mới</h4>
+          <div id="new-member-rows"></div>
+          <button id="add-member-row" class="btn btn-secondary" type="button">+ Thêm dòng</button>
+          <button id="save-new-members" class="btn btn-primary">Lưu thành viên mới</button>
+          <p id="member-msg" class="msg"></p>
+        </div>
+      </section>
+
+      <section id="admin-tab-entries" class="tab-panel">
+        <div class="card form-card">
+          <h3>📝 Ghi nhận lượt chơi</h3>
+          <p class="hint" id="active-round-hint"></p>
+          <label>Map <select id="entry-map"></select></label>
+          <label>Thành viên <select id="entry-member"></select></label>
+          <label>Số vé đã dùng
+            <select id="entry-tickets"><option value="1">1 vé</option><option value="2">2 vé</option><option value="3">3 vé</option></select>
+          </label>
+          <label>Điểm đạt được <input type="number" id="entry-points" min="1" step="1" placeholder="VD: 4000"></label>
+          <button id="entry-submit" class="btn btn-primary">Ghi nhận</button>
+          <p id="entry-msg" class="msg"></p>
+        </div>
+
+        <div class="card form-card">
+          <h3>📋 Quản lý lượt chơi đã ghi</h3>
+          <div class="log-filters" aria-label="Bộ lọc lượt chơi">
+            <label>Thành viên
+              <select id="log-filter-member"><option value="">Tất cả thành viên</option></select>
+            </label>
+            <label>Round
+              <select id="log-filter-round"><option value="">Tất cả Round</option></select>
+            </label>
+            <label>Map
+              <select id="log-filter-map"><option value="">Tất cả Map</option></select>
+            </label>
+            <button id="log-filter-reset" class="btn btn-secondary" type="button">Xoá bộ lọc</button>
+          </div>
+          <p id="log-filter-summary" class="hint log-filter-summary"></p>
+          <div id="admin-log-list"></div>
+        </div>
+      </section>
+    </div>
+  </section>
+</main>
+
+<script src="/auth-client.js"></script>
+<script src="/pokemon-types.js"></script>
+<script src="/admin-utils.js"></script>
+<script src="/dashboard.js"></script>
+<script src="/admin.js"></script>
+</body>
+</html>
+

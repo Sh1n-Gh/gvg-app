@@ -1,0 +1,48 @@
+{
+  "name": "gvg-v2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test/engine-test.js && node test/master-routes-smoke-test.js && node test/frontend-ux-test.js && node --test test/auth-test.js test/session-test.js test/request-security-test.js",
+    "test:p09": "node --test test/request-security-test.js test/session-test.js && node test/master-routes-smoke-test.js",
+    "auth:migrate": "node scripts/migrate-auth.js",
+    "test:auth": "node --test test/auth-test.js test/session-test.js",
+    "auth:recover-master": "node scripts/recover-master.js",
+    "test:browser": "node --test test/frontend-session-test.js",
+    "test:p05": "node test/master-routes-smoke-test.js && node test/frontend-ux-test.js && npm run test:auth && npm run test:browser",
+    "test:p11": "node --test --test-concurrency=1 test/security-headers-test.js test/frontend-session-test.js test/master-xss-test.js && node test/frontend-ux-test.js",
+    "test:p12": "node --test test/deployment-test.js test/request-security-test.js test/security-headers-test.js test/session-test.js",
+    "test:p13": "node --test test/map-images-test.js test/session-test.js && node test/master-routes-smoke-test.js && node --test test/master-xss-test.js",
+    "test:p14": "node --test test/error-handling-test.js test/request-security-test.js test/session-test.js test/deployment-test.js test/map-images-test.js && node test/engine-test.js && node test/master-routes-smoke-test.js",
+    "db:migrate": "node scripts/migrate-db.js",
+    "db:preflight": "node scripts/migrate-db.js --dry-run",
+    "test:p16": "node --test test/migrations-test.js test/auth-test.js test/session-test.js",
+    "db:backup": "node scripts/backup-db.js backup",
+    "db:restore": "node scripts/backup-db.js restore",
+    "test:p17": "node --test test/backup-restore-test.js && node test/master-routes-smoke-test.js --restore-rehearsal",
+    "perf:p18": "node scripts/benchmark-sqlite.js",
+    "test:p18": "node --test test/sqlite-concurrency-test.js test/migrations-test.js test/backup-restore-test.js test/session-test.js && node test/engine-test.js && node test/master-routes-smoke-test.js && node test/frontend-ux-test.js",
+    "test:p20": "node --test test/observability-test.js test/error-handling-test.js test/session-test.js test/deployment-test.js && node test/master-routes-smoke-test.js",
+    "test:p22": "node --test test/security-e2e-test.js",
+    "qa:p23": "node scripts/qa-p23.js",
+    "test:regression": "node scripts/test-ci.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "1.19.0",
+    "sharp": "0.35.4"
+  },
+  "engines": {
+    "node": ">=24.7.0 <25"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

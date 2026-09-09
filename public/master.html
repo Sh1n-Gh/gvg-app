@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Master Admin — Gym vs Gym Tracker</title>
+<meta name="description" content="Trang quản trị Gym và mùa thi đấu Gym vs Gym.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Rubik:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-badge">👑</span>
+    <div>
+      <h1>Master Admin</h1>
+      <p class="muted">Quản trị toàn hệ thống Gym vs Gym Tracker</p>
+    </div>
+  </div>
+</header>
+
+<div id="lock-box" class="card form-card" style="max-width:420px;margin:24px auto;">
+  <label>Mật khẩu Master Admin
+    <input type="password" id="master-code" autocomplete="current-password" placeholder="Nhập mật khẩu Master Admin">
+  </label>
+  <button id="unlock-btn" class="btn btn-primary">Đăng nhập</button>
+  <p id="lock-msg" class="msg"></p>
+</div>
+
+<nav class="tabs hidden" id="master-tabs">
+  <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+  <button class="tab-btn" data-tab="seasons">Season Templates</button>
+  <button class="tab-btn" data-tab="gyms">Gyms</button>
+  <button class="tab-btn" data-tab="requests">Gym Requests</button>
+</nav>
+
+<main id="panel" class="hidden">
+
+  <!-- ===== DASHBOARD ===== -->
+  <section id="tab-dashboard" class="tab-panel active">
+    <h2 class="section-title">Tổng quan</h2>
+    <div id="dashboard-summary" class="card-list"></div>
+  </section>
+
+  <!-- ===== SEASON TEMPLATES ===== -->
+  <section id="tab-seasons" class="tab-panel">
+    <h2 class="section-title">Season Templates</h2>
+    <div id="season-list" class="card-list"></div>
+
+    <div class="card form-card" style="margin-top:18px;">
+      <h3 id="season-form-title">➕ Tạo Season Template mới</h3>
+
+      <label>Tên Season <input type="text" id="st-name" placeholder="VD: Mùa Hè 2026"></label>
+
+      <h4 style="font-family:var(--font-display);font-size:13px;">🗺️ Maps</h4>
+      <p class="hint">Khuyến nghị 8 map. Ảnh chấp nhận PNG/JPEG tối đa 5 MB và sẽ được crop đồng đều khi hiển thị.</p>
+      <div id="st-maps"></div>
+      <button id="st-add-map" class="btn btn-secondary" type="button">+ Thêm Map</button>
+
+      <h4 style="font-family:var(--font-display);font-size:13px;margin-top:16px;">🎯 Rounds</h4>
+      <p class="hint">max_score từng Round độc lập, không bắt buộc tăng dần.</p>
+      <div id="st-rounds"></div>
+      <button id="st-add-round" class="btn btn-secondary" type="button">+ Thêm Round</button>
+
+      <div class="repeat-score-info">
+        Repeat max_score tự động bằng Round cuối: <strong id="st-repeat-preview">—</strong>
+      </div>
+
+      <h4 style="font-family:var(--font-display);font-size:13px;margin-top:16px;">🎫 Cấu hình vé</h4>
+      <label>Thời điểm bắt đầu phát vé (giờ Việt Nam, GMT+7)
+        <input type="datetime-local" id="st-battle-start">
+      </label>
+      <label>Vé ngày đầu <input type="number" id="st-day1" min="0" step="1"></label>
+      <label>Vé mỗi ngày sau đó <input type="number" id="st-daily" min="0" step="1"></label>
+      <label>Số ngày còn được nhận thêm vé (regen_days) <input type="number" id="st-regen" min="0" step="1"></label>
+
+      <button id="st-submit" class="btn btn-primary">💾 Lưu Season Template</button>
+      <button id="st-cancel-edit" class="btn btn-secondary hidden" type="button">Huỷ sửa</button>
+      <p id="st-msg" class="msg"></p>
+    </div>
+  </section>
+
+  <!-- ===== GYMS ===== -->
+  <section id="tab-gyms" class="tab-panel">
+    <h2 class="section-title">Gyms</h2>
+    <label style="max-width:260px;"><input type="checkbox" id="gyms-include-deleted" style="width:auto;display:inline-block;margin-right:6px;">Hiện cả Gym đã xoá</label>
+    <div id="gym-list" class="card-list" style="margin-top:12px;"></div>
+
+    <div class="card form-card" style="margin-top:18px;">
+      <h3>➕ Tạo Gym mới</h3>
+      <label>Tên Gym <input type="text" id="gym-name" placeholder="VD: Lauga Gym"></label>
+      <label>Slug (để trống để tự sinh từ Tên)
+        <input type="text" id="gym-slug" placeholder="VD: lauga-gym">
+      </label>
+      <p class="hint" id="gym-slug-hint"></p>
+      <label>Mã Admin (để trống để tự sinh)
+        <input type="text" id="gym-admin-code" placeholder="Để trống = tự sinh ngẫu nhiên">
+      </label>
+      <button id="gym-submit" class="btn btn-primary">Tạo Gym</button>
+      <p id="gym-msg" class="msg"></p>
+      <div id="gym-created-box" class="hidden" style="margin-top:14px;padding:12px;border:1px solid var(--gold);border-radius:12px;">
+        <p class="muted" style="margin:0 0 6px;">✅ Đã tạo Gym — lưu lại thông tin này (mã Admin chỉ hiện ở đây):</p>
+        <p style="margin:2px 0;">Dashboard: <a id="gym-created-dashboard" href="#" target="_blank"></a></p>
+        <p style="margin:2px 0;">Admin: <a id="gym-created-admin" href="#" target="_blank"></a></p>
+        <p style="margin:2px 0;">Mã Admin: <code id="gym-created-code"></code></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GYM REQUESTS ===== -->
+  <section id="tab-requests" class="tab-panel">
+    <h2 class="section-title">Gym Requests</h2>
+    <p class="hint">Duyệt/Từ chối request sẽ có ở Phase 7 — hiện tại chỉ xem danh sách đang chờ.</p>
+    <div id="request-list" class="card-list"></div>
+  </section>
+
+</main>
+
+<script src="/auth-client.js"></script>
+<script src="/pokemon-types.js"></script>
+<script src="/master.js"></script>
+</body>
+</html>
+
