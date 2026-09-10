@@ -57,6 +57,16 @@ Mục tiêu: xử lý lần lượt các vấn đề bảo mật, lỗi, vận h
 | 08/10/2026 | P23 | Load test, responsive và browser QA | Trung bình | DONE — local: 1.680 HTTP/560 writes, 0 lỗi/locked; burst đạt concurrency 32, đề xuất 16; Chrome/Edge/Firefox 84 views PASS; Safari/soak và 2 failure hồi quy ghi task riêng, xem [P23 checkpoint](P23-CHECKPOINT.md) |
 | 09/10/2026 | P24 | Staging rehearsal và quyết định go-live | Nặng | BLOCKED — audit 09/09: NO-GO; 240 PASS/9 FAIL/0 skip; rehearsal local 58 checks và restore smoke 52 PASS; còn plaintext, regression/P22 và gate hạ tầng; không production, xem [P24 checkpoint](P24-CHECKPOINT.md) |
 
+## P24.1e — Xác nhận cuối C-01
+
+**DONE — 10/09/2026. C-01 PASS local trong phạm vi bằng chứng a→d; live scrub OPEN.** Đã kiểm tra git sạch tại HEAD 77e528b và đọc lại a→d. P24.1a/b/d DONE; phần điều tra/phân loại c được người dùng xác nhận hoàn tất, giữ nguyên nhãn PARTIAL nghiệm thu lịch sử trong checkpoint c.
+
+Tổng hợp a→e: a dừng ghi plaintext mới (hai test create/rollback PASS, Master smoke 50 PASS); b scrub clone idempotent (7/7 scrub tests, 3 → 0 plaintext, login 3/3, no-op/rollback PASS); c phân loại 14 FAIL thành 8 regression fixture và 6 records H-05 cũ; d sửa đủ 8 regression, mục tiêu 11 PASS/0 FAIL, bộ liên quan 38 PASS/1 FAIL P15-Q1 cũ; e không chạy lại suite, chỉ scan plaintext một lần cuối: 87 file, 3 + 13 match fixture như c, clone integrity OK/0 match cột và bytes/digest không đổi, log c 0 match giá trị đã biết.
+
+**Đã đóng:** 8 regression fixture liên quan C-01. **Giới hạn còn chấp nhận, không chặn PASS local:** thiếu coverage password sinh động trong response/log tiến trình con và mọi logger nội bộ; không quét dependency/Git history/backup ngoài repo, artifact tmp trong source scan hoặc secret chưa biết/đã encode. Không tuyên bố hết plaintext fixture hoặc mọi log sạch. Chưa apply/phê duyệt DB thật; NO-GO / P24 BLOCKED và H-01/H-04/H-05/H-06 giữ nguyên. Chỉ sửa dòng C-01 trong readiness.
+
+[Báo cáo đầy đủ a→e và mục điều kiện rollout DB thật nguyên văn từ c](P24-1E-CHECKPOINT.md), [scan cuối/digest](P24-1E-RESULTS.json). Không commit; dừng tại P24.1e.
+
 ## P24.1a — Dừng ghi credential plaintext mới
 
 **DONE — 09/09/2026.** Đóng phần dừng ghi plaintext mới của C-01; không đóng toàn bộ C-01/P24. Phạm vi tương ứng P15-C1b trong bảng task tại [PRODUCTION-READINESS](PRODUCTION-READINESS.md), theo [AUTH-DESIGN](AUTH-DESIGN.md) phase C. P15-C1b trước đây không có mục riêng trong file prompts này.

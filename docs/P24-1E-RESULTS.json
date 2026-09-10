@@ -1,0 +1,108 @@
+{
+  "scope": "Working source (including test fixtures), existing P24.1b prepared/scrubbed clones read-only, captured P24.1c stdout/stderr. No live DB, Git history, external backups or unknown/encoded secrets.",
+  "sourceFiles": 87,
+  "knownCloneCredentials": 6,
+  "knownCloneCredentialSourceHits": [
+    {
+      "file": "test\\engine-test.js",
+      "line": 41
+    },
+    {
+      "file": "test\\engine-test.js",
+      "line": 152
+    },
+    {
+      "file": "test\\engine-test.js",
+      "line": 177
+    }
+  ],
+  "explicitFixtureCredentialSourceHits": [
+    {
+      "file": "test\\session-test.js",
+      "line": 51
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 65
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 87
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 140
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 187
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 190
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 192
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 215
+    },
+    {
+      "file": "test\\session-test.js",
+      "line": 216
+    },
+    {
+      "file": "test\\request-security-test.js",
+      "line": 107
+    },
+    {
+      "file": "test\\request-security-test.js",
+      "line": 109
+    },
+    {
+      "file": "test\\auth-scrub-test.js",
+      "line": 15
+    },
+    {
+      "file": "test\\auth-scrub-test.js",
+      "line": 28
+    }
+  ],
+  "clone": {
+    "integrity": "ok",
+    "remainingNonTombstones": 0,
+    "allColumnMatches": 0,
+    "fileByteMatches": 0
+  },
+  "capturedLogHits": [],
+  "limitation": "Known-value scan only. Test fixtures intentionally contain plaintext samples. Some tests suppress/capture logger output, so stdout/stderr scan does not prove all runtime-generated passwords absent from every internal log.",
+  "clonesUnchanged": true,
+  "artifacts": [
+    {
+      "file": "tmp\\p24-1b\\prepared-copy.db",
+      "sha256": "e989bf504ed48be0d97725be74c0ab64ee743b77170947d229a0475536ef9387"
+    },
+    {
+      "file": "tmp\\p24-1b\\scrubbed-clone.db",
+      "sha256": "8379e2721aa98adc3c12bbb5a4040f9aa16527ba936a6e09618e5f9ba700de27"
+    },
+    {
+      "file": "tmp\\p24-1c\\tests.txt",
+      "sha256": "321bf35b3bbbc8f984578a52cb596a073ece00377add459879efa1e80055254b"
+    },
+    {
+      "file": "tmp\\p24-1c\\master.txt",
+      "sha256": "683b594d4aeb8839c9ce6044c519d170ec61367dcf871264f326897048a552d3"
+    }
+  ],
+  "verification": {
+    "task": "P24.1e",
+    "date": "2026-09-10",
+    "sourceCommit": "77e528b70c4d9ec879e66bcbccc9ff818fc95fde",
+    "scanRuns": 1,
+    "testSuitesRerun": false,
+    "logScope": "Existing P24.1c logs only; no new runtime instrumentation"
+  }
+}
