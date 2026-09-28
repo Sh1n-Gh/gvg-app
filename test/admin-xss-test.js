@@ -1,9 +1,11 @@
+const { suiteTest } = require('./visual-suite-mode');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const http = require('node:http');
 const { chromium } = require('playwright');
+const { waitForScreenshotStability } = require('./screenshot-stability');
 const root = path.join(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const artifactDir = path.join(root, 'tmp/p07');
@@ -53,7 +55,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
   fs.mkdirSync(artifactDir, { recursive: true });
   const browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined) });
   try {
-    await t.test('escape roundtrips and image URL policy', async () => {
+    await suiteTest(t, 'escape roundtrips and image URL policy', async () => {
       const source = read('public/admin.js').replace('sessionClient.restore();', 'window.__adminTest = { escapeHtml, imageUrl }; sessionClient.restore();');
       const { page } = await setup(browser, fixture(), source);
       try {
@@ -75,7 +77,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       } finally { await page.close(); }
     });
 
-    await t.test('API names, IDs, numbers, filters, member editor and log cards cannot inject markup', async () => {
+    await suiteTest(t, 'API names, IDs, numbers, filters, member editor and log cards cannot inject markup', async () => {
       for (const attack of [payload, attributePayload]) {
         const data = fixture(attack, attack);
         data.members[0].id = attack;
@@ -111,7 +113,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       }
     });
 
-    await t.test('wizard input values are literal; add/remove handlers survive copied and empty rosters', async () => {
+    await suiteTest(t, 'wizard input values are literal; add/remove handlers survive copied and empty rosters', async () => {
       const { page, errors } = await setup(browser, fixture(payload, attributePayload));
       try {
         await page.locator('#open-switch-wizard').click();
@@ -127,7 +129,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       } finally { await page.close(); }
     });
 
-    await t.test('avatar and Map URL payloads fall back; valid images still load', async () => {
+    await suiteTest(t, 'avatar and Map URL payloads fall back; valid images still load', async () => {
       for (const url of ['javascript:alert(1)', 'data:text/html,<script>window.__xss=1</script>', 'data:image/svg+xml,<svg onload="window.__xss=1">', 'x" onerror="window.__xss=1', image]) {
         const { page } = await setup(browser, fixture('Alice', url));
         try {
@@ -141,7 +143,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       }
     });
 
-    await t.test('API failures stay text in create/edit member, entry and wizard flows', async () => {
+    await suiteTest(t, 'API failures stay text in create/edit member, entry and wizard flows', async () => {
       const { page } = await setup(browser);
       try {
         await page.route('**/admin/**', route => route.request().method() === 'GET' ? route.fallback() : route.fulfill({ status: 400, json: { error: payload } }));
@@ -166,11 +168,12 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       } finally { await page.close(); }
     });
 
-    await t.test('responsive before/after screenshots', { skip: !fs.existsSync(path.join(artifactDir, 'admin-before.js')) && 'Requires local pre-edit admin-before.js' }, async () => {
+    await suiteTest(t, 'responsive before/after screenshots', { skip: !fs.existsSync(path.join(artifactDir, 'admin-before.js')) && 'Requires local pre-edit admin-before.js' }, async () => {
       const before = await setup(browser, fixture(), fs.readFileSync(path.join(artifactDir, 'admin-before.js'), 'utf8'));
       const after = await setup(browser);
       try {
         for (const width of [390, 768, 1440]) for (const view of ['members', 'member-edit', 'wizard', 'entries', 'entry-edit']) {
+          if (process.env.VISUAL_CAPTURE_CASE && process.env.VISUAL_CAPTURE_CASE !== `${width}/${view}`) continue;
           const shots = [];
           for (const [label, { page }] of [['before', before], ['after', after]]) {
             await page.setViewportSize({ width, height: 900 });
@@ -183,7 +186,8 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
               if (await page.locator('.ed-cancel').isVisible()) await page.locator('.ed-cancel').click();
               if (view === 'entry-edit') await page.locator('.ed-edit').click();
             }
-            await page.evaluate(async () => { await Promise.all([...document.images].map(img => img.decode().catch(() => {}))); });
+            await waitForScreenshotStability(page);
+            await require('./bbox-diagnostic').captureBbox(page, label, `${width}/${view}`);
             shots.push(await page.screenshot({ path: path.join(artifactDir, `${label}-${width}-${view}.png`), fullPage: true, animations: 'disabled' }));
           }
           assert.ok(shots[0].equals(shots[1]), `Layout changed at ${width}/${view}`);
@@ -191,7 +195,7 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
       } finally { await before.page.close(); await after.page.close(); }
     });
 
-    await t.test('real session/API/database: create/edit member and create/edit log preserve data and IDs', async () => {
+    await suiteTest(t, 'real session/API/database: create/edit member and create/edit log preserve data and IDs', async () => {
       const { createDb } = require('../db'); const { createApp } = require('../server');
       const { migrateCredentials } = require('../auth/migrate');
       const db = createDb(':memory:');
@@ -218,8 +222,15 @@ test('P07 Gym Admin XSS and workflow regression', { timeout: 180000 }, async t =
         await page.locator('#admin-code').fill('gym-test-password'); await page.locator('#unlock-btn').click();
         await page.locator('#panel').waitFor({ state: 'visible' });
         await page.locator('.nm-name').first().fill(payload); await page.locator('.nm-avatar').first().fill('javascript:alert(1)');
+        const rejected = page.waitForResponse(r => r.url().endsWith('/members/bulk') && r.request().method() === 'POST');
+        await page.locator('#save-new-members').click();
+        assert.equal((await rejected).status(), 400);
+        assert.equal(db.prepare('SELECT count(*) n FROM members').get().n, 0);
+        mutations.length = 0;
+        await page.locator('.nm-avatar').first().fill(image);
         await page.locator('#save-new-members').click(); await page.locator('#member-list .list-row').waitFor();
         const member = db.prepare('SELECT * FROM members').get(); assert.equal(member.name, payload);
+        assert.equal(member.avatar_url, image);
         await page.locator('.mem-edit').click(); await page.locator('.mem-name').fill('draft'); await page.locator('.mem-cancel').click();
         assert.equal(await page.locator('.mem-name').inputValue(), payload);
         await page.locator('.mem-edit').click(); await page.locator('.mem-name').fill(payload + ' edited');

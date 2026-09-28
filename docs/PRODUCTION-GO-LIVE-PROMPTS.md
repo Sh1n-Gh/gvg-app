@@ -57,6 +57,10 @@ Mục tiêu: xử lý lần lượt các vấn đề bảo mật, lỗi, vận h
 | 08/10/2026 | P23 | Load test, responsive và browser QA | Trung bình | DONE — local: 1.680 HTTP/560 writes, 0 lỗi/locked; burst đạt concurrency 32, đề xuất 16; Chrome/Edge/Firefox 84 views PASS; Safari/soak và 2 failure hồi quy ghi task riêng, xem [P23 checkpoint](P23-CHECKPOINT.md) |
 | 09/10/2026 | P24 | Staging rehearsal và quyết định go-live | Nặng | BLOCKED — audit 09/09: NO-GO; 240 PASS/9 FAIL/0 skip; rehearsal local 58 checks và restore smoke 52 PASS; còn plaintext, regression/P22 và gate hạ tầng; không production, xem [P24 checkpoint](P24-CHECKPOINT.md) |
 
+## P24.2a — Điều tra và phân loại H-05
+
+**DONE — 10/09/2026, chỉ điều tra/tài liệu.** Working tree sạch tại HEAD `4bb0423`; chạy đúng một lần `node scripts/test-ci.js`, lưu toàn bộ log trước khi đọc: **21 file, 253 PASS / 5 FAIL / 0 skip / 0 cancelled**, gồm 3 lỗi độc lập + 2 parent. Gym workflow và auth startup là fixture cũ; Master visual 390/edit tái hiện, Gym/Dashboard visual PASS lần này nhưng flake lịch sử chưa đóng. Đã đối chiếu đầy đủ P24/P24.1c và ảnh decoded pixels; cơ chế renderer chung còn là giả thuyết, không khẳng định root cause thiếu bằng chứng. [Bảng phân loại và log P24.2a](P24-2A-CHECKPOINT.md). Đề xuất hai nhóm fixture và visual/harness để xem xét; chưa triển khai P24.2b/c. Không sửa code/test/baseline, không commit; H-05 và NO-GO giữ nguyên.
+
 ## P24.1e — Xác nhận cuối C-01
 
 **DONE — 10/09/2026. C-01 PASS local trong phạm vi bằng chứng a→d; live scrub OPEN.** Đã kiểm tra git sạch tại HEAD 77e528b và đọc lại a→d. P24.1a/b/d DONE; phần điều tra/phân loại c được người dùng xác nhận hoàn tất, giữ nguyên nhãn PARTIAL nghiệm thu lịch sử trong checkpoint c.

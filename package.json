@@ -27,7 +27,9 @@
     "test:p20": "node --test test/observability-test.js test/error-handling-test.js test/session-test.js test/deployment-test.js && node test/master-routes-smoke-test.js",
     "test:p22": "node --test test/security-e2e-test.js",
     "qa:p23": "node scripts/qa-p23.js",
-    "test:regression": "node scripts/test-ci.js"
+    "test:regression": "node scripts/test-ci.js",
+    "visual-monitoring": "node scripts/visual-monitoring.js",
+    "test:ci": "node scripts/test-ci-with-monitoring.js"
   },
   "keywords": [],
   "author": "",

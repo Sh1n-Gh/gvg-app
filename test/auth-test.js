@@ -136,10 +136,16 @@ test('production process rejects missing secrets before listening without leakin
 
 test('CLI migration and production HTTP checkpoint work with explicit configuration', async () => {
   const { spawnSync, spawn } = require('node:child_process');
+  const http = require('node:http');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(),'gvg-checkpoint-'));
   let child;
   try {
-    const config = {...process.env,NODE_ENV:'production',PUBLIC_ORIGIN:'https://example.test',DB_PATH:path.join(dir,'app.db'),PORT:'0',
+    const reservation = http.createServer();
+    await new Promise((resolve, reject) => { reservation.once('error', reject); reservation.listen(0, '127.0.0.1', resolve); });
+    const port = reservation.address().port;
+    await new Promise(resolve => reservation.close(resolve));
+    const config = {...process.env,NODE_ENV:'production',PUBLIC_ORIGIN:'https://example.test',DB_PATH:path.join(dir,'app.db'),PORT:String(port),
+      TRUST_PROXY:'127.0.0.1',LOG_LEVEL:'info',
       AUTH_MIGRATION_BACKUP_PATH:path.join(dir,'before.db'),SESSION_SECRETS:'s'.repeat(32),
       AUTH_RATE_LIMIT_SECRET:'r'.repeat(32),MASTER_ADMIN_CODE:'fixture-code',MASTER_ADMIN_BOOTSTRAP_PASSWORD:''};
     const hookPath = path.join(dir, 'backup-hook.cjs');
@@ -152,11 +158,38 @@ test('CLI migration and production HTTP checkpoint work with explicit configurat
     assert.equal(migrated.status,0);
     assert.deepEqual(JSON.parse(migrated.stdout.trim()),{migrated:1,skipped:0,failed:0});
     child = spawn(process.execPath,[path.join(__dirname,'../server.js')],{env:config,stdio:['ignore','pipe','pipe']});
+    const events = []; let stderrBytes = 0;
+    child.stderr.on('data', data => { stderrBytes += data.length; });
     await new Promise((resolve,reject) => {
-      const timeout = setTimeout(() => reject(new Error('startup timeout')),5000);
-      child.once('exit',() => {clearTimeout(timeout); reject(new Error('startup exited'));});
-      child.stdout.on('data',data => { if(data.toString().includes('http://localhost')) {clearTimeout(timeout); resolve();} });
+      let pending = '';
+      const failure = reason => new Error(`${reason}; events=${events.join(',')}; stderrBytes=${stderrBytes}`);
+      const timeout = setTimeout(() => reject(failure('startup timeout')),5000);
+      child.once('error', () => { clearTimeout(timeout); reject(failure('startup spawn error')); });
+      child.once('exit',code => {clearTimeout(timeout); reject(failure(`startup exited (${code})`));});
+      child.stdout.on('data',data => {
+        pending += data.toString();
+        let newline;
+        while ((newline = pending.indexOf('\n')) >= 0) {
+          const line = pending.slice(0, newline); pending = pending.slice(newline + 1);
+          let record; try { record = JSON.parse(line); } catch { continue; }
+          if (['server_started', 'startup_failed'].includes(record.event)) events.push(record.event);
+          if (record.event === 'server_started') { clearTimeout(timeout); resolve(); }
+        }
+      });
     });
+    const ready = await new Promise((resolve, reject) => {
+      const request = http.get({ hostname:'127.0.0.1', port, path:'/ready',
+        headers:{ Host:'example.test', 'X-Forwarded-Proto':'https' } }, response => {
+        let body = ''; response.on('data', data => { body += data; });
+        response.on('error', reject);
+        response.on('end', () => resolve({ status:response.statusCode, body }));
+      });
+      request.setTimeout(5000, () => request.destroy(new Error('readiness HTTP timeout')));
+      request.on('error', reject);
+    });
+    assert.equal(ready.status, 200);
+    assert.deepEqual(JSON.parse(ready.body), { status:'ok' });
+    assert.equal(stderrBytes, 0);
   } finally {
     if (child && child.exitCode === null) { const closed = new Promise(resolve => child.once('exit',resolve)); child.kill(); await closed; }
     fs.rmSync(dir,{recursive:true,force:true});

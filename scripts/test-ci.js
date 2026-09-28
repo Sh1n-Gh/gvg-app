@@ -4,7 +4,7 @@ const { spawnSync } = require('node:child_process');
 let failed = false;
 for (const file of fs.readdirSync('test').filter(f => f.endsWith('-test.js')).sort()) {
   console.log(`Regression suite: ${file}`);
-  const result = spawnSync(process.execPath, [`test/${file}`], { stdio: 'inherit' });
+  const result = spawnSync(process.execPath, [`test/${file}`], { stdio: 'inherit', env: { ...process.env, VISUAL_SUITE_MODE: 'blocking' } });
   if (result.status !== 0) failed = true;
 }
 process.exitCode = failed ? 1 : 0;

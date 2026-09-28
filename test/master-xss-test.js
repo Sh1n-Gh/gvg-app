@@ -1,3 +1,4 @@
+const { suiteTest } = require('./visual-suite-mode');
 const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
@@ -55,7 +56,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
   fs.mkdirSync(artifacts, { recursive: true });
   const browser = await chromium.launch({ headless: true, channel: process.env.PLAYWRIGHT_CHANNEL || (process.platform === 'win32' ? 'msedge' : undefined) });
   try {
-    await t.test('escape, HTTP URLs and separate local raster data URL policy', async () => {
+    await suiteTest(t, 'escape, HTTP URLs and separate local raster data URL policy', async () => {
       const { page } = await setup(browser);
       try {
         const values = [payload, attr, '&lt;img&gt;', '` & < > " \'', '', null];
@@ -72,7 +73,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       } finally { await page.close(); }
     });
 
-    await t.test('API Gym/season/request names and Map/Round attributes are literal', async () => {
+    await suiteTest(t, 'API Gym/season/request names and Map/Round attributes are literal', async () => {
       for (const attack of [payload, attr]) {
         const data = fixture(attack, attack);
         data.seasons[0].gym_count = attack;
@@ -103,7 +104,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       }
     });
 
-    await t.test('persisted preview URLs and created Gym links reject executable schemes', async () => {
+    await suiteTest(t, 'persisted preview URLs and created Gym links reject executable schemes', async () => {
       for (const url of ['javascript:alert(1)', 'data:text/html,<script>window.__xss=1</script>', 'data:image/svg+xml,<svg onload="window.__xss=1">', 'x" onerror="window.__xss=1', image]) {
         const { page } = await setup(browser, fixture('Summer', url));
         try {
@@ -123,7 +124,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       }
     });
 
-    await t.test('all list/API errors remain text, including upload and template failures', async () => {
+    await suiteTest(t, 'all list/API errors remain text, including upload and template failures', async () => {
       const { page } = await setup(browser);
       try {
         await page.route('**/master/**', route => route.fulfill({ status: 400, json: { error: payload } }));
@@ -147,7 +148,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       } finally { await page.close(); }
     });
 
-    await t.test('PNG/JPEG preview, hostile filename, clear, invalid files and stale reads', async () => {
+    await suiteTest(t, 'PNG/JPEG preview, hostile filename, clear, invalid files and stale reads', async () => {
       const { page, errors } = await setup(browser);
       try {
         await edit(page); await setPng(page, payload + '.png');
@@ -172,7 +173,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       } finally { await page.close(); }
     });
 
-    await t.test('unsafe upload response cannot be saved as template image', async () => {
+    await suiteTest(t, 'unsafe upload response cannot be saved as template image', async () => {
       const { page } = await setup(browser); let saved = 0;
       try {
         await page.route('**/master/map-images', route => route.fulfill({ json: { image_url: 'data:image/svg+xml,<svg onload=alert(1)>' } }));
@@ -183,7 +184,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       } finally { await page.close(); }
     });
 
-    await t.test('before/after Master responsive screenshots', { skip: !fs.existsSync(path.join(artifacts, 'master-before.js')) && 'Requires local pre-edit baseline' }, async () => {
+    await suiteTest(t, 'before/after Master responsive screenshots', { skip: !fs.existsSync(path.join(artifacts, 'master-before.js')) && 'Requires local pre-edit baseline' }, async () => {
       const before = await setup(browser, fixture(), fs.readFileSync(path.join(artifacts, 'master-before.js'), 'utf8'));
       const after = await setup(browser);
       for (const { page } of [before, after]) await page.evaluate(() => {
@@ -228,7 +229,7 @@ test('P08 Master Admin XSS, upload and template regression', { timeout: 180000 }
       } finally { await before.page.close(); await after.page.close(); }
     });
 
-    await t.test('real session/API/SQLite: upload PNG/JPEG and create/edit template without losing IDs or text', async () => {
+    await suiteTest(t, 'real session/API/SQLite: upload PNG/JPEG and create/edit template without losing IDs or text', async () => {
       const { createDb } = require('../db'); const { createApp } = require('../server');
       const db = createDb(':memory:'); const password = 'master browser test password';
       db.prepare("INSERT INTO auth_principals(role,password_hash,must_rotate) VALUES ('master',?,0)").run(await require('../auth/password').hashPassword(password));
